@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import PostList from '../components/PostList.astro';
+import portrait from '../assets/eder-byline.png';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { getPublishedPosts } from '../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
+	<section class="hero">
+		<p class="hero-kicker">Blog · IA, estrategia y negocio</p>
+		<h1 class="statement">
+			<span class="statement-line">No es hype.</span>
+			<span class="statement-line">
+				<span class="statement-still">Son</span><span class="cycle">
+					<span class="cycle-sizer" aria-hidden="true">
+						<span>resultados.</span>
+						<span>estrategia.</span>
+						<span>negocio.</span>
+					</span>
+					<span class="cycle-window" aria-hidden="true">
+						<span class="cycle-track">
+							<span>resultados.</span>
+							<span>estrategia.</span>
+							<span>negocio.</span>
+							<span>resultados.</span>
+						</span>
+					</span>
+				</span>
+				<span class="sr-only">resultados.</span>
+			</span>
+		</h1>
+		<div class="hero-sign">
+			<Image
+				src={portrait}
+				alt=""
+				widths={[240, 420]}
+				sizes="160px"
+				quality={90}
+				loading="eager"
+				class="hero-mark"
+			/>
+			<p>
+				<span class="hero-name">Eder Santisteban</span>
+				<span class="hero-role">Consultor estratégico de IA · Speaker · Fundador de MaIA School</span>
+			</p>
+		</div>
+	</section>
+
+	{
+		posts.length > 0 && (
+			<section class="notes" aria-labelledby="notas">
+				<div class="section-label">
+					<h2 id="notas">Notas</h2>
+					<span>{String(posts.length).padStart(2, '0')}</span>
+				</div>
+				<PostList posts={posts} />
+			</section>
+		)
+	}
+
+	<section class="stats" aria-labelledby="sobre-eder">
+		<div class="section-label">
+			<h2 id="sobre-eder">Sobre Eder</h2>
+		</div>
+		<ul class="stats-grid">
+			<li>
+				<span class="stat-num">15</span>
+				<span class="stat-label">años en digital</span>
+			</li>
+			<li>
+				<span class="stat-num">100+</span>
+				<span class="stat-label">empresas</span>
+			</li>
+			<li>
+				<span class="stat-num">7+</span>
+				<span class="stat-label">países</span>
+			</li>
+			<li>
+				<span class="stat-num">MaIA</span>
+				<span class="stat-label">School</span>
+			</li>
+		</ul>
+	</section>
+</Base>

@@ -1,0 +1,109 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<header class="site-header">
+	<a class="skip-link" href="#contenido">Saltar al contenido</a>
+	<div class="wrap header-bar">
+		<a class="brand" href="/">
+			Eder Santisteban
+			<span class="brand-sep" aria-hidden="true">—</span>
+			<span class="brand-blog">Blog</span>
+		</a>
+		<div class="header-end">
+			<a class="site-link" href="https://santisteban.co">
+				santisteban.co
+				<span aria-hidden="true">↗</span>
+			</a>
+			<ThemeToggle />
+		</div>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		background: var(--header);
+		border-bottom: 1px solid var(--line);
+	}
+	.header-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		min-height: 4.25rem;
+	}
+	.brand {
+		color: var(--text);
+		font-weight: 560;
+		font-size: 0.95rem;
+		letter-spacing: -0.02em;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.brand:hover {
+		color: var(--text);
+	}
+	.brand-sep {
+		margin: 0 0.35rem;
+		color: var(--muted);
+		font-weight: 400;
+	}
+	.brand-blog {
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		font-weight: 400;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+	.header-end {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+	.site-link {
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.site-link:hover {
+		color: var(--text);
+	}
+	.skip-link {
+		position: absolute;
+		left: 0.75rem;
+		top: 0.5rem;
+		transform: translateY(-150%);
+		background: var(--bg);
+		color: var(--text);
+		padding: 0.4rem 0.7rem;
+		z-index: 6;
+	}
+	.skip-link:focus {
+		transform: none;
+	}
+	@media (max-width: 720px) {
+		.header-bar {
+			gap: 0.55rem;
+		}
+		.header-end {
+			gap: 0.45rem;
+		}
+		.brand {
+			font-size: 0.82rem;
+		}
+		.brand-sep {
+			margin: 0 0.2rem;
+		}
+		.site-link {
+			font-size: 0.64rem;
+		}
+	}
+</style>

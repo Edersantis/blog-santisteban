@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/eder-byline.png';
+
+interface Props {
+	large?: boolean;
+}
+
+const { large = false } = Astro.props;
+---
+
+<div class:list={['byline', { large }]}>
+	<Image
+		src={portrait}
+		alt="Eder Santisteban"
+		width={360}
+		height={284}
+		widths={[180, 360]}
+		sizes="72px"
+		class="byline-photo"
+		loading="eager"
+	/>
+	<div>
+		<p class="byline-name">Eder Santisteban</p>
+		<p class="byline-role">Consultor estratégico de IA · Speaker · Fundador de MaIA School</p>
+	</div>
+</div>

@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Author from '../components/Author.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import TagList from '../components/TagList.astro';
+import Base from './Base.astro';
+
+type Heading = { depth: number; slug: string; text: string };
+
+type Props = CollectionEntry<'blog'>['data'] & {
+	readingMinutes: number;
+	headings?: Heading[];
+};
+
+const { title, description, pubDate, updatedDate, heroImage, tags, draft, author, readingMinutes, headings = [] } =
+	Astro.props;
+
+const readingLabel = readingMinutes === 1 ? '1 min de lectura' : `${readingMinutes} min de lectura`;
+const isSample = tags.includes('ejemplo');
+const sections = headings.filter((heading) => heading.depth === 2);
+---
+
+<Base
+	title={title}
+	description={description}
+	image={heroImage}
+	ogType="article"
+	pubDate={pubDate}
+	updatedDate={updatedDate}
+	author={author}
+	tags={tags}
+	mainClass="page"
+>
+	<article class="post">
+		<header class="post-header">
+			{isSample && <p class="kicker">Muestra</p>}
+			<h1 class="article-title">{title}</h1>
+			<Author />
+		</header>
+		{
+			heroImage && (
+				<figure class="hero-figure">
+					<Image
+						width={1800}
+						height={1100}
+						src={heroImage}
+						alt=""
+						widths={[640, 960, 1400]}
+						sizes="(min-width: 1200px) 1120px, calc(100vw - 2.5rem)"
+						loading="eager"
+						fetchpriority="high"
+					/>
+				</figure>
+			)
+		}
+		<div class="post-layout">
+			<div class="prose">
+				<slot />
+			</div>
+			<aside class="post-aside">
+				<p class="meta">
+					<span class="meta-part"><FormattedDate date={pubDate} /></span>
+					<span class="meta-part">{readingLabel}</span>
+					{draft && <span class="badge-draft">Borrador</span>}
+				</p>
+				{
+					updatedDate && (
+						<p class="updated">
+							Actualizado el <FormattedDate date={updatedDate} />
+						</p>
+					)
+				}
+				<TagList tags={tags} />
+				{
+					sections.length > 0 && (
+						<nav aria-label="En esta nota">
+							<p class="toc-label">En esta nota</p>
+							<ol class="toc">
+								{sections.map((heading) => (
+									<li>
+										<a href={`#${heading.slug}`}>{heading.text}</a>
+									</li>
+								))}
+							</ol>
+						</nav>
+					)
+				}
+			</aside>
+		</div>
+	</article>
+</Base>
