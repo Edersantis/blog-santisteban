@@ -1,25 +1,29 @@
 ---
+import Author from '../components/Author.astro';
 import Base from '../layouts/Base.astro';
 
-const description = 'Quién es Eder Santisteban. Texto provisional, pendiente de completar.';
+const description =
+	'Eder Santisteban, consultor estratégico de IA, speaker y fundador de MaIA School. Texto provisional.';
 ---
 
-<Base title="Acerca de" description={description}>
-	<h1>Acerca de</h1>
-	<p class="placeholder-note">
-		Texto provisional. Esta página está lista para que Eder la reescriba con su propia voz.
-	</p>
-	<p>
-		Eder Santisteban da clases en la Universidad Galileo y en Maia, escuela de IA, y trabaja en
-		inteligencia artificial y tecnología.
-	</p>
-	<h2>Pendiente de completar</h2>
-	<ul>
-		<li>Una presentación en primera persona.</li>
-		<li>En qué está trabajando ahora.</li>
-		<li>Cómo contactarlo y para qué escribirle.</li>
-	</ul>
-	<p>
-		El sitio principal está en <a href="https://santisteban.co">santisteban.co</a>.
-	</p>
+<Base title="Acerca de" description={description} mainClass="page">
+	<p class="page-kicker">Texto provisional</p>
+	<h1 class="page-title">Acerca de</h1>
+	<Author large />
+	<div class="prose">
+		<p>
+			Eder Santisteban es consultor estratégico de inteligencia artificial, speaker internacional y
+			divulgador. Lleva quince años en lo digital —marketing y Google Ads— y ha acompañado a más de
+			cien empresas en más de siete países de Latinoamérica.
+		</p>
+		<p>
+			Es fundador de MaIA School y da clases en la Universidad Galileo. Su trabajo consiste en bajar
+			la IA a decisiones, equipos y operación. Sin hype.
+		</p>
+		<p>
+			Esta página todavía espera su voz. El sitio principal está en
+			<a href="https://santisteban.co">santisteban.co</a>. MaIA School está en
+			<a href="https://maia.school">maia.school</a>.
+		</p>
+	</div>
 </Base>

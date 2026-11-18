@@ -1,8 +1,6 @@
 ---
 import type { BlogPost } from '../lib/posts';
-import { readingTimeLabel } from '../lib/posts';
 import FormattedDate from './FormattedDate.astro';
-import TagList from './TagList.astro';
 
 interface Props {
 	posts: BlogPost[];
@@ -15,48 +13,81 @@ const { posts } = Astro.props;
 	posts.length === 0 ? (
 		<p>Todavía no hay artículos publicados.</p>
 	) : (
-		<ul class="post-list">
-			{posts.map((post) => (
+		<ol class="post-list">
+			{posts.map((post, index) => (
 				<li>
-					<p class="meta">
-						<span class="meta-part"><FormattedDate date={post.data.pubDate} /></span>
-						<span class="meta-part">{readingTimeLabel(post.body)}</span>
-						{post.data.draft && <span class="badge-draft">Borrador</span>}
-					</p>
-					<h2>
-						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-					</h2>
-					<p>{post.data.description}</p>
-					<TagList tags={post.data.tags} />
+					<a class="row" href={`/blog/${post.id}/`}>
+						<span class="row-index">{String(index + 1).padStart(2, '0')}</span>
+						<span class="row-title">
+							{post.data.title}
+							{post.data.draft && <span class="badge-draft">Borrador</span>}
+						</span>
+						<span class="row-date">
+							<FormattedDate date={post.data.pubDate} format="short" />
+						</span>
+					</a>
 				</li>
 			))}
-		</ul>
+		</ol>
 	)
 }
 
 <style>
 	.post-list {
 		list-style: none;
-		padding: 0;
-		margin: 1.5rem 0 0;
-	}
-	.post-list li {
 		margin: 0;
-		padding: 1.25rem 0;
-		border-top: 1px solid rgb(var(--gray-light));
+		padding: 0;
 	}
-	.post-list h2 {
-		font-size: 1.563em;
-		margin: 0.2rem 0 0.4rem;
-	}
-	.post-list h2 a {
-		color: rgb(var(--black));
+	.row {
+		display: grid;
+		grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+		column-gap: 1.15rem;
+		align-items: baseline;
+		padding: 1.15rem 0 1.2rem;
+		border-top: 1px solid var(--line);
+		color: inherit;
 		text-decoration: none;
 	}
-	.post-list h2 a:hover {
+	.post-list li:last-child .row {
+		border-bottom: 1px solid var(--line);
+	}
+	.row-index,
+	.row-date {
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.row-title {
+		font-family: var(--font-display);
+		font-size: clamp(1.45rem, 2.35vw, 2.15rem);
+		font-weight: 520;
+		font-variation-settings: 'opsz' 72, 'wght' 520;
+		letter-spacing: -0.028em;
+		line-height: 1.12;
+		transition: color 160ms ease;
+	}
+	.row:hover .row-title,
+	.row:hover .row-index {
 		color: var(--accent);
 	}
-	.post-list p {
-		margin-bottom: 0.4rem;
+	.row:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 4px;
+	}
+	@media (max-width: 640px) {
+		.row {
+			grid-template-columns: 1.8rem minmax(0, 1fr);
+			row-gap: 0.35rem;
+		}
+		.row-date {
+			grid-column: 2;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.row-title {
+			transition: none;
+		}
 	}
 </style>

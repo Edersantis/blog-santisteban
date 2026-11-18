@@ -5,38 +5,52 @@ const year = new Date().getFullYear();
 const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIAL_LINKS];
 ---
 
-<footer>
-	<p>&copy; {year} {SITE_TITLE}</p>
-	<nav class="social-links" aria-label="Enlaces">
-		{
-			links.map((link) => (
-				<a href={link.href} target="_blank" rel="noopener noreferrer">
-					{link.label}
-				</a>
-			))
-		}
-		<a href="/rss.xml">RSS</a>
-	</nav>
+<footer class="site-footer">
+	<div class="wrap footer-bar">
+		<p>© {year} {SITE_TITLE}</p>
+		<nav aria-label="Enlaces">
+			{
+				links.map((link) => (
+					<a href={link.href} target="_blank" rel="noopener noreferrer">
+						{link.label}
+					</a>
+				))
+			}
+			<a href="/rss.xml">RSS</a>
+		</nav>
+	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 4em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
+	.site-footer {
+		border-top: 1px solid var(--line);
+		padding: 1.35rem 0 1.6rem;
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 	}
-	.social-links {
+	.footer-bar {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.25rem 1rem;
-		margin-top: 1em;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		align-items: baseline;
 	}
-	.social-links a {
+	p {
+		margin: 0;
+	}
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 1rem;
+	}
+	a {
+		color: var(--muted);
 		text-decoration: none;
-		color: rgb(var(--gray));
 	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+	a:hover {
+		color: var(--accent);
 	}
 </style>

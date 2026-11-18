@@ -1,18 +1,23 @@
 ---
 interface Props {
 	date: Date;
+	format?: 'long' | 'short';
 }
 
-const { date } = Astro.props;
+const { date, format = 'long' } = Astro.props;
+const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const shortLabel = `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 ---
 
 <time datetime={date.toISOString()}>
 	{
-		date.toLocaleDateString('es-GT', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			timeZone: 'UTC',
-		})
+		format === 'short'
+			? shortLabel
+			: date.toLocaleDateString('es-GT', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					timeZone: 'UTC',
+				})
 	}
 </time>

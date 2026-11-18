@@ -13,19 +13,20 @@ interface Props {
 	updatedDate?: Date;
 	author?: string;
 	tags?: string[];
+	mainClass?: string;
 }
 
-const props = Astro.props;
+const { mainClass, ...head } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<BaseHead {...props} />
+		<BaseHead {...head} />
 	</head>
 	<body>
 		<Header />
-		<main id="contenido">
+		<main id="contenido" class:list={['wrap', mainClass]}>
 			<slot />
 		</main>
 		<Footer />

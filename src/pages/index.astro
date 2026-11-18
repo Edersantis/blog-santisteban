@@ -1,22 +1,33 @@
 ---
+import Author from '../components/Author.astro';
 import PostList from '../components/PostList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPublishedPosts } from '../lib/posts';
 
 const posts = await getPublishedPosts();
-const latest = posts.slice(0, 5);
 ---
 
-<Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1>Notas sobre IA y tecnología</h1>
-	<p class="lede">
-		Blog de Eder Santisteban. Inteligencia artificial, tecnología y lo que pasa en clase en la
-		Universidad Galileo y en Maia, escuela de IA.
-	</p>
-	<p class="placeholder-note">Introducción provisional. Eder puede reescribirla.</p>
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
+	<h1 class="statement">
+		<span class="statement-line"><span class="statement-still">No es hype.</span></span>
+		<span class="statement-line">
+			<span class="statement-still">Son</span>
+			<span class="cycle" aria-hidden="true">
+				<span class="cycle-word">estrategia.</span>
+				<span class="cycle-word">negocio.</span>
+				<span class="cycle-word">resultados.</span>
+			</span>
+			<span class="sr-only">resultados.</span>
+		</span>
+	</h1>
+	<Author />
 
-	<h2>Últimos artículos</h2>
-	<PostList posts={latest} />
-	<p><a href="/blog/">Todos los artículos</a></p>
+	<section class="notes" aria-labelledby="notas">
+		<div class="section-label">
+			<h2 id="notas">Notas</h2>
+			<span>{String(posts.length).padStart(2, '0')}</span>
+		</div>
+		<PostList posts={posts} />
+	</section>
 </Base>

@@ -136,4 +136,4 @@ Hasta que ese dominio esté conectado, el sitio se ve en el subdominio `.netlify
     └── styles/global.css
 ```
 
-Hay un artículo de ejemplo, `src/content/blog/esto-es-un-ejemplo.md`, con `draft: false` para que el primer deploy no salga vacío. Se puede borrar cuando exista un artículo real. Su par social está en `social/esto-es-un-ejemplo.md`.
+Hay ocho artículos de muestra en `src/content/blog/`, con prefijo `ejemplo-` y etiqueta `ejemplo`, publicados (`draft: false`) para que el sitio no salga vacío. Se borran todos de una vez cuando haya textos reales. La plantilla de X y LinkedIn sigue en `social/_plantilla.md`.

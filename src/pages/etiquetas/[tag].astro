@@ -31,8 +31,9 @@ const posts = (await getPublishedPosts()).filter((post) =>
 );
 ---
 
-<Base title={`Etiqueta: ${label}`} description={`Artículos etiquetados con «${label}».`}>
-	<p><a href="/etiquetas/">Todas las etiquetas</a></p>
-	<h1>{label}</h1>
+<Base title={`Etiqueta: ${label}`} description={`Artículos etiquetados con «${label}».`} mainClass="page">
+	<p><a class="back-link" href="/etiquetas/">Todas las etiquetas</a></p>
+	<p class="page-kicker">Etiqueta</p>
+	<h1 class="page-title">{label}</h1>
 	<PostList posts={posts} />
 </Base>

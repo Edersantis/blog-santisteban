@@ -17,8 +17,9 @@ for (const post of posts) {
 const tags = [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label, 'es'));
 ---
 
-<Base title="Etiquetas" description="Etiquetas de los artículos del blog.">
-	<h1>Etiquetas</h1>
+<Base title="Etiquetas" description="Etiquetas de los artículos del blog." mainClass="page">
+	<p class="page-kicker">Índice</p>
+	<h1 class="page-title">Etiquetas</h1>
 	{
 		tags.length === 0 ? (
 			<p>Todavía no hay etiquetas.</p>
@@ -36,21 +37,3 @@ const tags = [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].
 		)
 	}
 </Base>
-
-<style>
-	.tag-index {
-		list-style: none;
-		padding: 0;
-		margin: 1.5rem 0 0;
-	}
-	.tag-index li {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.75rem 0;
-		border-top: 1px solid rgb(var(--gray-light));
-	}
-	.tag-index span {
-		color: rgb(var(--gray));
-	}
-</style>

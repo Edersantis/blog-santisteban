@@ -1,68 +1,107 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
-<header>
+<header class="site-header">
 	<a class="skip-link" href="#contenido">Saltar al contenido</a>
-	<nav>
-		<h2>
-			<a href="/">{SITE_TITLE}</a>
-		</h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Inicio</HeaderLink>
-			<HeaderLink href="/blog/">Blog</HeaderLink>
-			<HeaderLink href="/acerca/">Acerca de</HeaderLink>
+	<div class="wrap header-bar">
+		<a class="brand" href="/">{SITE_TITLE}</a>
+		<div class="header-end">
+			<nav class="header-nav" aria-label="Principal">
+				<HeaderLink class="nav-link" href="/">Inicio</HeaderLink>
+				<HeaderLink class="nav-link" href="/blog/">Blog</HeaderLink>
+				<HeaderLink class="nav-link" href="/acerca/">Acerca de</HeaderLink>
+			</nav>
+			<ThemeToggle />
 		</div>
-	</nav>
+	</div>
 </header>
+
 <style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		background: var(--header);
+		border-bottom: 1px solid var(--line);
 	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
+	.header-bar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		gap: 1rem;
+		min-height: 4.25rem;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: rgb(var(--black));
-		border-bottom: 4px solid transparent;
+	.brand {
+		color: var(--text);
+		font-weight: 560;
+		font-size: 0.95rem;
+		letter-spacing: -0.02em;
 		text-decoration: none;
+		white-space: nowrap;
 	}
-	nav a.active {
+	.brand:hover {
+		color: var(--text);
+	}
+	.header-end {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+	.header-nav {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+	.header-nav :global(a.nav-link) {
+		color: var(--muted);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		line-height: 1;
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+	.header-nav :global(a.nav-link:hover),
+	.header-nav :global(a.nav-link.active) {
+		color: var(--text);
+	}
+	.header-nav :global(a.nav-link.active) {
+		box-shadow: inset 0 -1px 0 var(--accent);
 	}
 	.skip-link {
 		position: absolute;
-		left: 0.5rem;
-		top: 0;
-		transform: translateY(-120%);
-		background: white;
-		color: rgb(var(--black));
+		left: 0.75rem;
+		top: 0.5rem;
+		transform: translateY(-150%);
+		background: var(--bg);
+		color: var(--text);
 		padding: 0.4rem 0.7rem;
-		z-index: 2;
+		z-index: 6;
 	}
 	.skip-link:focus {
 		transform: none;
 	}
 	@media (max-width: 720px) {
-		nav {
-			align-items: flex-start;
-			flex-direction: column;
+		.header-nav :global(a.nav-link) {
+			letter-spacing: 0.1em;
+		}
+	}
+	@media (max-width: 640px) {
+		.header-bar {
+			flex-wrap: wrap;
+			min-height: 0;
+			padding: 0.85rem 0 0.7rem;
+			row-gap: 0.55rem;
+		}
+		.header-end {
+			width: 100%;
+			justify-content: space-between;
+		}
+		.header-nav {
+			gap: 0.7rem;
 		}
 	}
 </style>
