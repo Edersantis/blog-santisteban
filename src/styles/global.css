@@ -114,59 +114,112 @@ main {
 }
 
 .home {
-	padding-top: clamp(3.5rem, 9vh, 6.5rem);
+	padding-top: clamp(1.6rem, 4vh, 3rem);
 }
 
 .page {
 	padding-top: clamp(3.25rem, 8vh, 5.5rem);
 }
 
-.statement {
+.hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: end;
+	column-gap: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.hero-copy {
+	position: relative;
+	z-index: 2;
+	min-width: 0;
+	padding-bottom: clamp(0.5rem, 2vh, 1.5rem);
+}
+
+.home-figure {
+	position: relative;
+	z-index: 1;
 	margin: 0;
-	font-size: clamp(3.15rem, 8.6vw, 7.7rem);
-	font-weight: 540;
-	font-variation-settings: 'opsz' 144, 'wght' 540;
-	letter-spacing: -0.042em;
-	line-height: 0.9;
+	justify-self: end;
+}
+
+.hero-portrait {
+	display: block;
+	width: clamp(300px, 48vw, 580px);
+	height: auto;
+	max-width: none;
+	-webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+	mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+}
+
+.hero-sign {
+	max-width: 26rem;
+	margin: 1.5rem 0 0;
+}
+
+.hero-name {
+	display: block;
+	font-family: var(--font-sans);
+	font-size: 1.05rem;
+	font-weight: 560;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+}
+
+.hero-role {
+	display: block;
+	margin-top: 0.28rem;
+	max-width: 26rem;
+	color: var(--muted);
+	font-size: 0.98rem;
+	line-height: 1.4;
+}
+
+.statement {
+	--line: 1.02;
+	margin: 0;
+	font-size: clamp(2.55rem, 4.15vw, 4.45rem);
+	font-weight: 560;
+	font-variation-settings: 'opsz' 144, 'wght' 560, 'SOFT' 30, 'WONK' 0;
+	font-feature-settings: 'kern' 1, 'calt' 0, 'liga' 0;
+	font-kerning: normal;
+	letter-spacing: -0.028em;
+	line-height: var(--line);
+	text-wrap: nowrap;
 }
 
 .statement-line {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	column-gap: 0.22em;
+	display: block;
+	margin: 0;
+	padding: 0;
+	line-height: var(--line);
+	white-space: nowrap;
 }
 
 .statement-still {
-	display: inline-block;
+	display: inline;
 }
 
 .cycle {
 	display: inline-block;
 	position: relative;
-	height: 1.12em;
-	overflow: hidden;
+	margin-left: 0.22em;
 	color: var(--accent);
 	vertical-align: baseline;
-	line-height: 1;
+	line-height: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	font-variation-settings: inherit;
+	font-feature-settings: inherit;
 }
 
 .cycle-sizer {
-	display: inline-block;
+	display: inline-grid;
 	visibility: hidden;
-	white-space: nowrap;
-	line-height: 1;
 }
 
 .cycle-sizer > span {
-	display: block;
-	height: 0;
-	overflow: hidden;
-}
-
-.cycle-sizer > span:first-child {
-	height: auto;
-	overflow: visible;
+	grid-area: 1 / 1;
+	white-space: nowrap;
 }
 
 .cycle-window {
@@ -181,8 +234,8 @@ main {
 
 .cycle-track > span {
 	display: block;
-	height: 1.12em;
-	line-height: 1.05;
+	height: calc(var(--line) * 1em);
+	line-height: var(--line);
 	white-space: nowrap;
 }
 
@@ -193,18 +246,18 @@ main {
 	}
 	25%,
 	43% {
-		transform: translateY(-1.12em);
+		transform: translateY(calc(var(--line) * -1em));
 	}
 	50%,
 	68% {
-		transform: translateY(-2.24em);
+		transform: translateY(calc(var(--line) * -2em));
 	}
 	75%,
 	93% {
-		transform: translateY(-3.36em);
+		transform: translateY(calc(var(--line) * -3em));
 	}
 	100% {
-		transform: translateY(-3.36em);
+		transform: translateY(calc(var(--line) * -3em));
 	}
 }
 
@@ -216,11 +269,13 @@ main {
 }
 
 .byline-photo {
-	width: 76px;
-	height: 96px;
-	object-fit: cover;
-	object-position: center 20%;
+	width: 72px;
+	height: auto;
+	object-fit: contain;
 	flex: none;
+	background: none;
+	border: 0;
+	border-radius: 0;
 }
 
 .post-header .byline {
@@ -228,8 +283,8 @@ main {
 }
 
 .byline.large .byline-photo {
-	width: 132px;
-	height: 168px;
+	width: 108px;
+	height: auto;
 }
 
 .byline-name {
@@ -691,13 +746,34 @@ main {
 	border: 0;
 }
 
-@media (max-width: 720px) {
-	body {
-		font-size: 1.0625rem;
+@media (max-width: 860px) {
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.home-figure {
+		margin: 0.35rem auto 0;
+	}
+
+	.hero-portrait {
+		width: min(92vw, 440px);
+		margin-inline: auto;
+	}
+
+	.hero-sign {
+		margin-top: 0.2rem;
 	}
 
 	.statement {
-		font-size: clamp(2.55rem, 11vw, 3.7rem);
+		font-size: clamp(2.35rem, 10.4vw, 3.15rem);
+	}
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 1.0625rem;
 	}
 
 	.article-title,

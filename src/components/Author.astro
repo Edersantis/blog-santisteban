@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import portrait from '../assets/author.jpg';
+import portrait from '../assets/eder-byline.png';
 
 interface Props {
 	large?: boolean;
@@ -13,10 +13,10 @@ const { large = false } = Astro.props;
 	<Image
 		src={portrait}
 		alt="Eder Santisteban"
-		width={344}
-		height={430}
-		widths={[344]}
-		sizes="76px"
+		width={360}
+		height={284}
+		widths={[180, 360]}
+		sizes="72px"
 		class="byline-photo"
 		loading="eager"
 	/>

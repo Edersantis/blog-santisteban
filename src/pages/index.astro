@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import Author from '../components/Author.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import PostList from '../components/PostList.astro';
+import portrait from '../assets/eder-cutout.png';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPublishedPosts } from '../lib/posts';
@@ -12,28 +12,47 @@ const [featured, ...rest] = posts;
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
-	<h1 class="statement">
-		<span class="statement-line"><span class="statement-still">No es hype.</span></span>
-		<span class="statement-line">
-			<span class="statement-still">Son</span>
-			<span class="cycle">
-				<span class="cycle-sizer" aria-hidden="true">
-					<span>estrategia.</span>
-					<span>resultados.</span>
-				</span>
-				<span class="cycle-window" aria-hidden="true">
-					<span class="cycle-track">
-						<span>resultados.</span>
-						<span>estrategia.</span>
-						<span>negocio.</span>
-						<span>resultados.</span>
+	<section class="hero">
+		<div class="hero-copy">
+			<h1 class="statement">
+				<span class="statement-line">No es hype.</span>
+				<span class="statement-line">
+					<span class="statement-still">Son</span><span class="cycle">
+						<span class="cycle-sizer" aria-hidden="true">
+							<span>resultados.</span>
+							<span>estrategia.</span>
+							<span>negocio.</span>
+						</span>
+						<span class="cycle-window" aria-hidden="true">
+							<span class="cycle-track">
+								<span>resultados.</span>
+								<span>estrategia.</span>
+								<span>negocio.</span>
+								<span>resultados.</span>
+							</span>
+						</span>
 					</span>
+					<span class="sr-only">resultados.</span>
 				</span>
-			</span>
-			<span class="sr-only">resultados.</span>
-		</span>
-	</h1>
-	<Author />
+			</h1>
+			<p class="hero-sign">
+				<span class="hero-name">Eder Santisteban</span>
+				<span class="hero-role">Consultor estratégico de IA · Speaker · Fundador de MaIA School</span>
+			</p>
+		</div>
+		<figure class="home-figure">
+			<Image
+				src={portrait}
+				alt="Eder Santisteban"
+				widths={[640, 960, 1280]}
+				sizes="(min-width: 900px) 48vw, 92vw"
+				quality={90}
+				loading="eager"
+				fetchpriority="high"
+				class="hero-portrait"
+			/>
+		</figure>
+	</section>
 
 	{
 		featured && (
@@ -52,8 +71,7 @@ const [featured, ...rest] = posts;
 								height={1100}
 								widths={[640, 960, 1400]}
 								sizes="(min-width: 1200px) 1120px, calc(100vw - 2.5rem)"
-								loading="eager"
-								fetchpriority="high"
+								loading="lazy"
 							/>
 						)
 					}
