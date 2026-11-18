@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import Author from '../components/Author.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
 import Base from './Base.astro';
@@ -35,6 +36,7 @@ const sections = headings.filter((heading) => heading.depth === 2);
 		<header class="post-header">
 			{isSample && <p class="kicker">Muestra</p>}
 			<h1 class="article-title">{title}</h1>
+			<Author />
 		</header>
 		{
 			heroImage && (
@@ -60,7 +62,6 @@ const sections = headings.filter((heading) => heading.depth === 2);
 				<p class="meta">
 					<span class="meta-part"><FormattedDate date={pubDate} /></span>
 					<span class="meta-part">{readingLabel}</span>
-					<span class="meta-part">{author}</span>
 					{draft && <span class="badge-draft">Borrador</span>}
 				</p>
 				{

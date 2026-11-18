@@ -219,8 +219,12 @@ main {
 	width: 76px;
 	height: 96px;
 	object-fit: cover;
-	object-position: center 18%;
+	object-position: center 20%;
 	flex: none;
+}
+
+.post-header .byline {
+	margin-top: 1.5rem;
 }
 
 .byline.large .byline-photo {
