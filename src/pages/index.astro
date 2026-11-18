@@ -1,89 +1,63 @@
 ---
 import { Image } from 'astro:assets';
-import FormattedDate from '../components/FormattedDate.astro';
 import PostList from '../components/PostList.astro';
-import portrait from '../assets/eder-cutout.png';
+import portrait from '../assets/eder-byline.png';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPublishedPosts } from '../lib/posts';
 
 const posts = await getPublishedPosts();
-const [featured, ...rest] = posts;
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
 	<section class="hero">
-		<div class="hero-copy">
-			<h1 class="statement">
-				<span class="statement-line">No es hype.</span>
-				<span class="statement-line">
-					<span class="statement-still">Son</span><span class="cycle">
-						<span class="cycle-sizer" aria-hidden="true">
+		<p class="hero-kicker">Blog · IA, estrategia y negocio</p>
+		<h1 class="statement">
+			<span class="statement-line">No es hype.</span>
+			<span class="statement-line">
+				<span class="statement-still">Son</span><span class="cycle">
+					<span class="cycle-sizer" aria-hidden="true">
+						<span>resultados.</span>
+						<span>estrategia.</span>
+						<span>negocio.</span>
+					</span>
+					<span class="cycle-window" aria-hidden="true">
+						<span class="cycle-track">
 							<span>resultados.</span>
 							<span>estrategia.</span>
 							<span>negocio.</span>
-						</span>
-						<span class="cycle-window" aria-hidden="true">
-							<span class="cycle-track">
-								<span>resultados.</span>
-								<span>estrategia.</span>
-								<span>negocio.</span>
-								<span>resultados.</span>
-							</span>
+							<span>resultados.</span>
 						</span>
 					</span>
-					<span class="sr-only">resultados.</span>
 				</span>
-			</h1>
-			<p class="hero-sign">
+				<span class="sr-only">resultados.</span>
+			</span>
+		</h1>
+		<div class="hero-sign">
+			<Image
+				src={portrait}
+				alt=""
+				widths={[240, 420]}
+				sizes="160px"
+				quality={90}
+				loading="eager"
+				class="hero-mark"
+			/>
+			<p>
 				<span class="hero-name">Eder Santisteban</span>
 				<span class="hero-role">Consultor estratégico de IA · Speaker · Fundador de MaIA School</span>
 			</p>
 		</div>
-		<figure class="home-figure">
-			<Image
-				src={portrait}
-				alt="Eder Santisteban"
-				widths={[640, 960, 1280]}
-				sizes="(min-width: 900px) 48vw, 92vw"
-				quality={90}
-				loading="eager"
-				fetchpriority="high"
-				class="hero-portrait"
-			/>
-		</figure>
 	</section>
 
 	{
-		featured && (
+		posts.length > 0 && (
 			<section class="notes" aria-labelledby="notas">
 				<div class="section-label">
 					<h2 id="notas">Notas</h2>
 					<span>{String(posts.length).padStart(2, '0')}</span>
 				</div>
-				<a class="feature" href={`/blog/${featured.id}/`}>
-					{
-						featured.data.heroImage && (
-							<Image
-								src={featured.data.heroImage}
-								alt=""
-								width={1800}
-								height={1100}
-								widths={[640, 960, 1400]}
-								sizes="(min-width: 1200px) 1120px, calc(100vw - 2.5rem)"
-								loading="lazy"
-							/>
-						)
-					}
-					<div>
-						<p class="feature-kicker">
-							01 · <FormattedDate date={featured.data.pubDate} format="short" />
-						</p>
-						<h3 class="feature-title">{featured.data.title}</h3>
-						<p class="feature-dek">{featured.data.description}</p>
-					</div>
-				</a>
-				<PostList posts={rest} start={2} />
+				<PostList posts={posts} />
 			</section>
 		)
 	}

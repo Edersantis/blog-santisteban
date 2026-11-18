@@ -1,6 +1,6 @@
-export const SITE_TITLE = 'Eder Santisteban';
+export const SITE_TITLE = 'Blog de Eder Santisteban';
 export const SITE_DESCRIPTION =
-	'Blog personal sobre inteligencia artificial, tecnología y enseñanza.';
+	'Notas sobre inteligencia artificial, estrategia y negocio.';
 export const AUTHOR = 'Eder Santisteban';
 
 /** Open Graph locale. Cambiar si se prefiere otro territorio. */

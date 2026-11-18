@@ -1,12 +1,15 @@
 ---
-import { SITE_TITLE } from '../consts';
 import ThemeToggle from './ThemeToggle.astro';
 ---
 
 <header class="site-header">
 	<a class="skip-link" href="#contenido">Saltar al contenido</a>
 	<div class="wrap header-bar">
-		<a class="brand" href="/">{SITE_TITLE}</a>
+		<a class="brand" href="/">
+			Eder Santisteban
+			<span class="brand-sep" aria-hidden="true">—</span>
+			<span class="brand-blog">Blog</span>
+		</a>
 		<div class="header-end">
 			<a class="site-link" href="https://santisteban.co">
 				santisteban.co
@@ -43,6 +46,19 @@ import ThemeToggle from './ThemeToggle.astro';
 	.brand:hover {
 		color: var(--text);
 	}
+	.brand-sep {
+		margin: 0 0.35rem;
+		color: var(--muted);
+		font-weight: 400;
+	}
+	.brand-blog {
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		font-weight: 400;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
 	.header-end {
 		display: flex;
 		align-items: center;
@@ -72,5 +88,22 @@ import ThemeToggle from './ThemeToggle.astro';
 	}
 	.skip-link:focus {
 		transform: none;
+	}
+	@media (max-width: 720px) {
+		.header-bar {
+			gap: 0.55rem;
+		}
+		.header-end {
+			gap: 0.45rem;
+		}
+		.brand {
+			font-size: 0.82rem;
+		}
+		.brand-sep {
+			margin: 0 0.2rem;
+		}
+		.site-link {
+			font-size: 0.64rem;
+		}
 	}
 </style>

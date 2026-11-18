@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SOCIAL_LINKS, X_URL } from '../consts';
+import { AUTHOR, SOCIAL_LINKS, X_URL } from '../consts';
 
 const year = new Date().getFullYear();
 const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIAL_LINKS];
@@ -13,7 +13,7 @@ const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIA
 		</p>
 	</div>
 	<div class="wrap footer-bar">
-		<p>© {year} {SITE_TITLE}</p>
+		<p>© {year} {AUTHOR}</p>
 		<nav aria-label="Enlaces">
 			{
 				links.map((link) => (
