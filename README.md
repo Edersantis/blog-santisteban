@@ -30,7 +30,7 @@ En local, los artículos con `draft: true` sí se ven, para poder revisarlos. En
 
 ## Cómo agregar un artículo
 
-1. Crea `src/content/blog/<slug>.md`. El nombre del archivo es la URL: `src/content/blog/mi-nota.md` se publica en `/blog/mi-nota/`.
+1. Crea `src/content/blog/<slug>.md`. El nombre del archivo es la URL: `src/content/blog/mi-nota.md` se publica en `/blog/mi-nota/`. El inicio ya es el listado; no hay una página aparte en `/blog/`. `/blog/`, `/acerca/` y `/about/` redirigen a `/`.
 2. Copia esta ficha al inicio del archivo:
 
 ```yaml
@@ -128,9 +128,8 @@ Hasta que ese dominio esté conectado, el sitio se ve en el subdominio `.netlify
     ├── layouts/
     ├── lib/posts.ts          # borradores, etiquetas, tiempo de lectura
     ├── pages/
-    │   ├── index.astro       # inicio
-    │   ├── acerca.astro
-    │   ├── blog/
+    │   ├── index.astro       # el blog
+    │   ├── blog/             # cada artículo en /blog/<slug>/
     │   ├── etiquetas/
     │   └── rss.xml.js
     └── styles/global.css
