@@ -1,11 +1,14 @@
 ---
+import { Image } from 'astro:assets';
 import Author from '../components/Author.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import PostList from '../components/PostList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPublishedPosts } from '../lib/posts';
 
 const posts = await getPublishedPosts();
+const [featured, ...rest] = posts;
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
@@ -13,21 +16,81 @@ const posts = await getPublishedPosts();
 		<span class="statement-line"><span class="statement-still">No es hype.</span></span>
 		<span class="statement-line">
 			<span class="statement-still">Son</span>
-			<span class="cycle" aria-hidden="true">
-				<span class="cycle-word">estrategia.</span>
-				<span class="cycle-word">negocio.</span>
-				<span class="cycle-word">resultados.</span>
+			<span class="cycle">
+				<span class="cycle-sizer" aria-hidden="true">
+					<span>estrategia.</span>
+					<span>resultados.</span>
+				</span>
+				<span class="cycle-window" aria-hidden="true">
+					<span class="cycle-track">
+						<span>resultados.</span>
+						<span>estrategia.</span>
+						<span>negocio.</span>
+						<span>resultados.</span>
+					</span>
+				</span>
 			</span>
 			<span class="sr-only">resultados.</span>
 		</span>
 	</h1>
 	<Author />
 
-	<section class="notes" aria-labelledby="notas">
+	{
+		featured && (
+			<section class="notes" aria-labelledby="notas">
+				<div class="section-label">
+					<h2 id="notas">Notas</h2>
+					<span>{String(posts.length).padStart(2, '0')}</span>
+				</div>
+				<a class="feature" href={`/blog/${featured.id}/`}>
+					{
+						featured.data.heroImage && (
+							<Image
+								src={featured.data.heroImage}
+								alt=""
+								width={1800}
+								height={1100}
+								widths={[640, 960, 1400]}
+								sizes="(min-width: 1200px) 1120px, calc(100vw - 2.5rem)"
+								loading="eager"
+								fetchpriority="high"
+							/>
+						)
+					}
+					<div>
+						<p class="feature-kicker">
+							01 · <FormattedDate date={featured.data.pubDate} format="short" />
+						</p>
+						<h3 class="feature-title">{featured.data.title}</h3>
+						<p class="feature-dek">{featured.data.description}</p>
+					</div>
+				</a>
+				<PostList posts={rest} start={2} />
+			</section>
+		)
+	}
+
+	<section class="stats" aria-labelledby="sobre-eder">
 		<div class="section-label">
-			<h2 id="notas">Notas</h2>
-			<span>{String(posts.length).padStart(2, '0')}</span>
+			<h2 id="sobre-eder">Sobre Eder</h2>
 		</div>
-		<PostList posts={posts} />
+		<ul class="stats-grid">
+			<li>
+				<span class="stat-num">15</span>
+				<span class="stat-label">años en digital</span>
+			</li>
+			<li>
+				<span class="stat-num">100+</span>
+				<span class="stat-label">empresas</span>
+			</li>
+			<li>
+				<span class="stat-num">7+</span>
+				<span class="stat-label">países</span>
+			</li>
+			<li>
+				<span class="stat-num">MaIA</span>
+				<span class="stat-label">School</span>
+			</li>
+		</ul>
 	</section>
 </Base>

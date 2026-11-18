@@ -6,6 +6,12 @@ const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIA
 ---
 
 <footer class="site-footer">
+	<div class="wrap">
+		<p class="invite">
+			La siguiente nota sale primero en
+			<a href="https://www.linkedin.com/in/edersantis">LinkedIn</a>.
+		</p>
+	</div>
 	<div class="wrap footer-bar">
 		<p>© {year} {SITE_TITLE}</p>
 		<nav aria-label="Enlaces">
@@ -24,7 +30,7 @@ const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIA
 <style>
 	.site-footer {
 		border-top: 1px solid var(--line);
-		padding: 1.35rem 0 1.6rem;
+		padding: 0 0 1.6rem;
 		color: var(--muted);
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
@@ -32,6 +38,9 @@ const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIA
 		text-transform: uppercase;
 	}
 	.footer-bar {
+		margin-top: 1.5rem;
+		padding-top: 1.1rem;
+		border-top: 1px solid var(--line);
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -46,11 +55,11 @@ const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIA
 		flex-wrap: wrap;
 		gap: 0.35rem 1rem;
 	}
-	a {
+	.footer-bar a {
 		color: var(--muted);
 		text-decoration: none;
 	}
-	a:hover {
+	.footer-bar a:hover {
 		color: var(--accent);
 	}
 </style>
