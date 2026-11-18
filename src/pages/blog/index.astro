@@ -1,0 +1,15 @@
+---
+import PostList from '../../components/PostList.astro';
+import Base from '../../layouts/Base.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<Base title="Blog" description="Artículos sobre inteligencia artificial, tecnología y enseñanza.">
+	<h1>Blog</h1>
+	<p>
+		<a href="/etiquetas/">Ver etiquetas</a>
+	</p>
+	<PostList posts={posts} />
+</Base>

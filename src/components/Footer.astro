@@ -1,0 +1,42 @@
+---
+import { SITE_TITLE, SOCIAL_LINKS, X_URL } from '../consts';
+
+const year = new Date().getFullYear();
+const links = X_URL ? [{ label: 'X', href: X_URL }, ...SOCIAL_LINKS] : [...SOCIAL_LINKS];
+---
+
+<footer>
+	<p>&copy; {year} {SITE_TITLE}</p>
+	<nav class="social-links" aria-label="Enlaces">
+		{
+			links.map((link) => (
+				<a href={link.href} target="_blank" rel="noopener noreferrer">
+					{link.label}
+				</a>
+			))
+		}
+		<a href="/rss.xml">RSS</a>
+	</nav>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 4em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.social-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.25rem 1rem;
+		margin-top: 1em;
+	}
+	.social-links a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+	}
+	.social-links a:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>

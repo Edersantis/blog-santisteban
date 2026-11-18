@@ -1,0 +1,62 @@
+---
+import type { BlogPost } from '../lib/posts';
+import { readingTimeLabel } from '../lib/posts';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+	posts: BlogPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+	posts.length === 0 ? (
+		<p>Todavía no hay artículos publicados.</p>
+	) : (
+		<ul class="post-list">
+			{posts.map((post) => (
+				<li>
+					<p class="meta">
+						<span class="meta-part"><FormattedDate date={post.data.pubDate} /></span>
+						<span class="meta-part">{readingTimeLabel(post.body)}</span>
+						{post.data.draft && <span class="badge-draft">Borrador</span>}
+					</p>
+					<h2>
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+					</h2>
+					<p>{post.data.description}</p>
+					<TagList tags={post.data.tags} />
+				</li>
+			))}
+		</ul>
+	)
+}
+
+<style>
+	.post-list {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0 0;
+	}
+	.post-list li {
+		margin: 0;
+		padding: 1.25rem 0;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+	.post-list h2 {
+		font-size: 1.563em;
+		margin: 0.2rem 0 0.4rem;
+	}
+	.post-list h2 a {
+		color: rgb(var(--black));
+		text-decoration: none;
+	}
+	.post-list h2 a:hover {
+		color: var(--accent);
+	}
+	.post-list p {
+		margin-bottom: 0.4rem;
+	}
+</style>
