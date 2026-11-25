@@ -1,7 +1,7 @@
 ---
 title: 'El error más caro al implementar IA en tu empresa'
 description: 'Comprar licencias de ChatGPT, Copilot o Gemini no basta. Cómo implementar IA en tu empresa empezando por el problema de negocio, con un método de cinco pasos.'
-pubDate: 2026-11-24T17:00:00-06:00
+pubDate: 2026-11-24T21:00:00-06:00
 section: articulos
 topic: Estrategia y operaciones
 tags:
