@@ -9,6 +9,8 @@ tags:
   - automatización
   - inteligencia artificial
 heroImage: '../../assets/blog/agentes-ia.jpg'
+heroAlt: 'Delegar una tarea exige definir sus límites: objetivo, contexto, acción y control, en cuatro columnas numeradas.'
+socialImage: '../../assets/blog/social/agentes-ia.jpg'
 draft: false
 ---
 

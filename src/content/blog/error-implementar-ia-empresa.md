@@ -10,6 +10,7 @@ tags:
   - adopción de IA
 heroImage: '../../assets/blog/error-implementar-ia.jpg'
 heroAlt: 'Una licencia no es una estrategia: licencia, uso, proceso y resultado, en cuatro columnas numeradas.'
+socialImage: '../../assets/blog/social/error-implementar-ia.jpg'
 faq:
   - question: '¿Por qué mi empresa no ve resultados con ChatGPT o Copilot?'
     answer: 'Casi siempre porque la herramienta llegó sin un problema de negocio definido ni una forma de medir. Las personas la usan para tareas sueltas, el tiempo ahorrado no se reasigna y nadie mide el efecto en el proceso. Elegir un caso, medirlo y asignarle un responsable suele cambiar la situación.'
