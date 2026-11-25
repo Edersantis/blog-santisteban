@@ -11,6 +11,19 @@ tags:
 heroImage: '../../assets/blog/agentes-ia.jpg'
 heroAlt: 'Delegar una tarea exige definir sus límites: objetivo, contexto, acción y control, en cuatro columnas numeradas.'
 socialImage: '../../assets/blog/social/agentes-ia.jpg'
+updatedDate: 2026-11-24T21:30:00-06:00
+summary: 'Un agente de IA es un sistema que usa un modelo para decidir pasos y emplear herramientas hasta completar una tarea, dentro de los permisos que le das. Lo necesitas cuando el trabajo exige interpretar contexto y adaptar el recorrido; si puedes describirlo con pocas reglas estables, empieza por una automatización. Pruébalo con una tarea delimitada, límites escritos y tres indicadores: tiempo, calidad y costo por caso aceptado.'
+faq:
+  - question: '¿Qué diferencia hay entre un agente de IA y un chatbot?'
+    answer: 'Tener una ventana de chat no convierte a una aplicación en un agente. Con un asistente, una persona pide ayuda y dirige el trabajo. Un agente elige pasos y usa herramientas dentro de un alcance definido: puede consultar información, observar el resultado de una acción y decidir cómo continuar con los permisos que le diste.'
+  - question: '¿Necesito saber programar para usar un agente?'
+    answer: 'Existen plataformas con configuración visual y herramientas listas para usar. Eso puede facilitar el inicio. Para conectarlas a sistemas internos, asignar permisos y revisar errores, conviene contar con alguien que entienda la integración y pueda mantenerla.'
+  - question: '¿Cuándo no conviene usar un agente de IA?'
+    answer: 'Cuando la información no es fiable, el proceso cambia según quién lo atienda, la tarea ocurre pocas veces, no hay forma de comprobar el resultado o el error tiene consecuencias que aún no puedes controlar. En esos casos, ordenaría primero el proceso o empezaría con un asistente supervisado.'
+  - question: '¿Un agente puede atender clientes sin supervisión?'
+    answer: 'La posibilidad técnica depende del sistema. Para decidir si conviene, evalúa el tipo de consulta, la calidad observada y las consecuencias de un error. En un primer piloto, priorizaría borradores revisados y una derivación humana que funcione.'
+  - question: '¿Cuánto cuesta implementar un agente de IA?'
+    answer: 'El alcance define el presupuesto. Pide separar configuración, integraciones, consumo, supervisión y mantenimiento. Compara propuestas para el mismo proceso y nivel de servicio; una cifra mensual aislada dice poco sobre el costo real.'
 draft: false
 ---
 
@@ -142,9 +155,17 @@ Antes de contratar, pide una demostración con tus condiciones de trabajo y dato
 
 ## Preguntas frecuentes sobre agentes de IA para negocios
 
+### ¿Qué diferencia hay entre un agente de IA y un chatbot?
+
+Tener una ventana de chat no convierte a una aplicación en un agente. Con un asistente, una persona pide ayuda y dirige el trabajo. Un agente elige pasos y usa herramientas dentro de un alcance definido: puede consultar información, observar el resultado de una acción y decidir cómo continuar con los permisos que le diste.
+
 ### ¿Necesito saber programar para usar un agente?
 
 Existen plataformas con configuración visual y herramientas listas para usar. Eso puede facilitar el inicio. Para conectarlas a sistemas internos, asignar permisos y revisar errores, conviene contar con alguien que entienda la integración y pueda mantenerla.
+
+### ¿Cuándo no conviene usar un agente de IA?
+
+Cuando la información no es fiable, el proceso cambia según quién lo atienda, la tarea ocurre pocas veces, no hay forma de comprobar el resultado o el error tiene consecuencias que aún no puedes controlar. En esos casos, ordenaría primero el proceso o empezaría con un asistente supervisado.
 
 ### ¿Un agente puede atender clientes sin supervisión?
 

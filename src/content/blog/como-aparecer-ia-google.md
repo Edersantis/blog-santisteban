@@ -10,6 +10,19 @@ tags:
   - marketing
 heroImage: '../../assets/blog/medir.jpg'
 heroAlt: 'Un portátil muestra un panel de analítica con gráficos e indicadores.'
+updatedDate: 2026-11-24T21:30:00-06:00
+summary: 'Para aparecer en las respuestas de IA de Google, tu página debe estar indexada y ser apta para mostrarse con un fragmento; eso permite participar, pero no garantiza aparecer. Lo que más depende de ti es responder preguntas reales de tus clientes con evidencia propia, en páginas que ayuden a decidir, técnicamente accesibles y medidas hasta la conversación comercial.'
+faq:
+  - question: '¿Qué necesita una página para aparecer en AI Overviews de Google?'
+    answer: 'Los mismos fundamentos del SEO: la página debe estar indexada y ser apta para mostrarse con un fragmento en la búsqueda. Cumplir esas condiciones permite participar, pero no garantiza aparecer. A partir de ahí, lo que más pesa es responder bien una pregunta real, con evidencia y en una página fácil de rastrear.'
+  - question: '¿Necesito un marcado especial o un archivo llms.txt?'
+    answer: 'No para Google. Google explica que sus experiencias con IA se apoyan en sus sistemas de búsqueda, que no exige un marcado especial y que no usa llms.txt para posicionar páginas. Los datos estructurados, como BlogPosting, ayudan a interpretar la página siempre que coincidan con lo que se ve en ella.'
+  - question: '¿Qué son GEO y AEO, y conviene contratar esos servicios?'
+    answer: 'Son nombres que se usan para describir servicios de visibilidad en respuestas generadas por IA. Antes de contratar, pregunta qué problema concreto de tu sitio resolverán, qué evidencia respalda sus acciones, qué entregables podrás revisar y cómo medirán el resultado. Desconfía de cualquier garantía de aparición.'
+  - question: '¿Cómo sé si mi contenido está funcionando?'
+    answer: 'Mide tres niveles. Descubrimiento: consultas, impresiones y clics en Search Console. Interés: qué hacen las personas después de llegar. Resultado: cuántas solicitudes relevantes recibes y qué contenido mencionan. Complétalo preguntando «¿Cómo nos encontraste?» en el primer contacto.'
+  - question: '¿Esto mismo sirve para aparecer en ChatGPT o Perplexity?'
+    answer: 'Esta nota se centra en Google. Las buenas prácticas de fondo, como contenido útil, evidencia propia y páginas accesibles, suelen servir en otros servicios, pero conviene evaluar cada uno por separado antes de extenderle las mismas conclusiones.'
 draft: false
 ---
 
@@ -180,6 +193,28 @@ Comprueba la página, enlázala desde contenido relacionado y compártela en los
 Revisa las primeras señales y las preguntas que siguen apareciendo. Completa las partes confusas. La evaluación del posicionamiento requerirá seguimiento posterior.
 
 Si vas a incorporar IA a la producción de contenido o a otros procesos, empieza por definir responsabilidades y medición. Lo desarrollo en [Tres decisiones antes de empezar un proyecto de IA](/blog/tres-decisiones-proyecto-ia/).
+
+## Preguntas frecuentes sobre aparecer en las respuestas de IA de Google
+
+### ¿Qué necesita una página para aparecer en AI Overviews de Google?
+
+Los mismos fundamentos del SEO: la página debe estar indexada y ser apta para mostrarse con un fragmento en la búsqueda. Cumplir esas condiciones permite participar, pero no garantiza aparecer. A partir de ahí, lo que más pesa es responder bien una pregunta real, con evidencia y en una página fácil de rastrear.
+
+### ¿Necesito un marcado especial o un archivo llms.txt?
+
+No para Google. Google explica que sus experiencias con IA se apoyan en sus sistemas de búsqueda, que no exige un marcado especial y que no usa llms.txt para posicionar páginas. Los datos estructurados, como BlogPosting, ayudan a interpretar la página siempre que coincidan con lo que se ve en ella.
+
+### ¿Qué son GEO y AEO, y conviene contratar esos servicios?
+
+Son nombres que se usan para describir servicios de visibilidad en respuestas generadas por IA. Antes de contratar, pregunta qué problema concreto de tu sitio resolverán, qué evidencia respalda sus acciones, qué entregables podrás revisar y cómo medirán el resultado. Desconfía de cualquier garantía de aparición.
+
+### ¿Cómo sé si mi contenido está funcionando?
+
+Mide tres niveles. Descubrimiento: consultas, impresiones y clics en Search Console. Interés: qué hacen las personas después de llegar. Resultado: cuántas solicitudes relevantes recibes y qué contenido mencionan. Complétalo preguntando «¿Cómo nos encontraste?» en el primer contacto.
+
+### ¿Esto mismo sirve para aparecer en ChatGPT o Perplexity?
+
+Esta nota se centra en Google. Las buenas prácticas de fondo, como contenido útil, evidencia propia y páginas accesibles, suelen servir en otros servicios, pero conviene evaluar cada uno por separado antes de extenderle las mismas conclusiones.
 
 ## Qué revisaría hoy en tu sitio
 

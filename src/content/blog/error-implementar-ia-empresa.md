@@ -20,6 +20,7 @@ faq:
     answer: 'Depende del proceso y del volumen de trabajo. Un piloto bien acotado debería mostrar señales dentro de su período de prueba, porque la métrica y la fecha de revisión se fijaron al inicio. Sin esas dos cosas, el retorno será difícil de ver en cualquier plazo.'
   - question: '¿Necesito un equipo técnico para empezar?'
     answer: 'No para empezar. Las primeras decisiones son de negocio: qué problema, qué proceso, qué métrica y quién responde. El apoyo técnico se vuelve necesario cuando hay que integrar sistemas, conectar datos sensibles o escalar la solución.'
+summary: 'El error más caro al implementar IA en tu empresa es empezar por la herramienta: comprar licencias sin un problema de negocio definido ni una forma de medir. El orden útil es el inverso: escribe el problema sin nombrar tecnología, observa el proceso, define la medida, elige la herramienta y pruébala en un piloto con un responsable y una fecha de decisión.'
 draft: false
 ---
 

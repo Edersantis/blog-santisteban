@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ site }) => {
 URL: ${link}
 Autor: ${post.data.author}
 Publicado: ${day(post.data.pubDate)}${updated}
-Resumen: ${post.data.description}
+Resumen: ${post.data.description}${post.data.summary ? `\nEn resumen: ${post.data.summary}` : ''}
 
 ${body}`;
 	});
