@@ -9,6 +9,17 @@ tags:
   - automatización
 heroImage: '../../assets/blog/decision.jpg'
 heroAlt: 'Público sentado en un auditorio oscuro escucha una presentación.'
+updatedDate: 2026-11-24T21:30:00-06:00
+summary: 'Antes de empezar un proyecto de IA, toma tres decisiones: qué proceso concreto vas a cambiar, quién responde por él y dónde interviene una persona, y cómo medirás si mejoró. Con eso puedes lanzar un piloto pequeño, con un resultado principal, una condición de calidad y un costo, y decidir con evidencia si continuar, ajustar o detener.'
+faq:
+  - question: '¿Por dónde empiezo un proyecto de IA en mi empresa?'
+    answer: 'Por un proceso concreto, no por una herramienta. Un buen punto de partida se repite lo suficiente, consume tiempo o genera errores reconocibles, tiene información que puedes consultar y revisar, y permite probar una solución con un alcance pequeño.'
+  - question: '¿Quién debe ser responsable de un proyecto de IA?'
+    answer: 'Una persona del negocio, con tiempo y autoridad para revisar resultados, ajustar criterios y detener una prueba. Quien configura la herramienta ayuda con la implementación, pero el proceso necesita un responsable con nombre. En una empresa pequeña, puedes ser tú.'
+  - question: '¿Cómo mido si un piloto de IA funcionó?'
+    answer: 'Mide el proceso actual con una muestra de casos y compáralo durante la prueba. Elige un resultado principal, como el tiempo de preparación, y vigila una condición de calidad y el costo por caso revisado, incluido el tiempo humano.'
+  - question: '¿Cuánto debe durar un piloto de IA?'
+    answer: 'Depende del volumen del proceso y de sus riesgos. Necesitas observar suficientes casos, incluidas algunas excepciones, para decidir con evidencia si continuar, ajustar o detener. Acuerda esas condiciones antes de empezar.'
 draft: false
 ---
 
@@ -132,6 +143,24 @@ Con estas decisiones tomadas, puedes resumir el proyecto en una página.
 Elige un período que permita observar suficientes casos, un grupo pequeño de usuarios y una forma de registrar lo que ocurre. La duración dependerá del volumen del proceso y de sus riesgos.
 
 Involucra desde el principio a quienes realizan el trabajo. Conocen las excepciones y podrán decirte si la solución les facilita la tarea o desplaza el esfuerzo hacia otro lugar.
+
+## Preguntas frecuentes sobre cómo empezar un proyecto de IA
+
+### ¿Por dónde empiezo un proyecto de IA en mi empresa?
+
+Por un proceso concreto, no por una herramienta. Un buen punto de partida se repite lo suficiente, consume tiempo o genera errores reconocibles, tiene información que puedes consultar y revisar, y permite probar una solución con un alcance pequeño.
+
+### ¿Quién debe ser responsable de un proyecto de IA?
+
+Una persona del negocio, con tiempo y autoridad para revisar resultados, ajustar criterios y detener una prueba. Quien configura la herramienta ayuda con la implementación, pero el proceso necesita un responsable con nombre. En una empresa pequeña, puedes ser tú.
+
+### ¿Cómo mido si un piloto de IA funcionó?
+
+Mide el proceso actual con una muestra de casos y compáralo durante la prueba. Elige un resultado principal, como el tiempo de preparación, y vigila una condición de calidad y el costo por caso revisado, incluido el tiempo humano.
+
+### ¿Cuánto debe durar un piloto de IA?
+
+Depende del volumen del proceso y de sus riesgos. Necesitas observar suficientes casos, incluidas algunas excepciones, para decidir con evidencia si continuar, ajustar o detener. Acuerda esas condiciones antes de empezar.
 
 ## La primera inversión es una decisión clara
 

@@ -14,6 +14,8 @@ interface Props {
 	description: string;
 	image?: ImageMetadata;
 	imageAlt?: string;
+	/** Resumen de la nota para los datos estructurados. */
+	abstract?: string;
 	ogType?: 'website' | 'article';
 	pageType?: 'WebPage' | 'CollectionPage';
 	pubDate?: Date;
@@ -31,6 +33,7 @@ const {
 	description,
 	image,
 	imageAlt,
+	abstract,
 	ogType = 'website',
 	pageType = 'WebPage',
 	pubDate,
@@ -132,6 +135,7 @@ const article =
 				isPartOf: { '@id': websiteId },
 				inLanguage: 'es',
 				...(section ? { articleSection: section } : {}),
+				...(abstract ? { abstract } : {}),
 				keywords: tags.join(', '),
 			}
 		: null;

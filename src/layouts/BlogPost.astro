@@ -17,7 +17,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 	older?: CollectionEntry<'blog'>;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, heroAlt, socialImage, faq, showCover, topic, section, tags, draft, author, readingMinutes, headings = [], related, newer, older } =
+const { title, description, pubDate, updatedDate, heroImage, heroAlt, socialImage, summary, faq, showCover, topic, section, tags, draft, author, readingMinutes, headings = [], related, newer, older } =
 	Astro.props;
 
 const readingLabel = readingMinutes === 1 ? '1 min de lectura' : `${readingMinutes} min de lectura`;
@@ -46,6 +46,7 @@ const faqJsonLd = faq?.length
 	description={description}
 	image={socialImage ?? heroImage}
 	imageAlt={heroAlt}
+	abstract={summary}
 	section={isRadar ? 'Radar IA' : topic}
 	breadcrumbs={isRadar
 		? [{ name: 'Inicio', url: '/' }, { name: 'Radar IA', url: '/radar-ia/' }, { name: displayTitle, url: Astro.url.pathname }]
@@ -89,6 +90,12 @@ const faqJsonLd = faq?.length
 		)}
 		<div class:list={["post-layout" , { "has-index": showIndex }]}>
 			<div class="prose">
+		{summary && (
+			<aside class="summary-box" aria-labelledby="summary-title">
+				<p class="toc-label" id="summary-title">En resumen</p>
+				<p>{summary}</p>
+			</aside>
+		)}
 		{
 			heroImage && showCover && (
 				<figure class="hero-figure">
@@ -377,6 +384,12 @@ const faqJsonLd = faq?.length
 		letter-spacing: -0.035em;
 	}
 
+	@media (max-width: 640px) {
+		.article-title {
+			letter-spacing: -0.02em;
+		}
+	}
+
 	.post-header .kicker,
 	.post-header .badge-draft {
 		color: #973e27;
@@ -396,6 +409,18 @@ const faqJsonLd = faq?.length
 	.post-layout .prose {
 		max-width: 100%;
 		min-width: 0;
+	}
+
+	.summary-box {
+		margin: 0 0 2rem;
+		padding: 0.1rem 0 0.1rem 1.1rem;
+		border-left: 2px solid var(--accent);
+	}
+
+	.summary-box p:last-child {
+		margin: 0.5rem 0 0;
+		font-size: 1.05rem;
+		line-height: 1.6;
 	}
 
 	.hero-figure {
