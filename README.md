@@ -67,6 +67,8 @@ Fechas en formato `AAAA-MM-DD`. Si omites `author`, queda `Eder Santisteban`. Si
 | `topic` | no | IA aplicada, Estrategia y operaciones, o Marketing y medición |
 | `showCover` | no | Con `false`, la nota abre con texto y conserva `heroImage` para compartir |
 | `heroImage` | no | Imagen de portada |
+| `heroAlt` | no | Texto alternativo de la portada. Si falta, la imagen se trata como decorativa |
+| `faq` | no | Lista de `question` y `answer`. Genera el marcado FAQPage para buscadores; las preguntas también deben estar en el texto |
 | `draft` | no | `true` o `false`. Por defecto `false` |
 | `author` | no | Por defecto `Eder Santisteban` |
 

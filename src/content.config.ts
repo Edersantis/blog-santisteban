@@ -16,9 +16,11 @@ const blog = defineCollection({
 			section: z.enum(['articulos', 'radar-ia']).default('articulos'),
 			topic: z.enum(EDITORIAL_TOPICS).optional(),
 			heroImage: z.optional(image()),
+			heroAlt: z.string().optional(),
 			showCover: z.boolean().default(true),
 			draft: z.boolean().default(false),
 			author: z.string().default('Eder Santisteban'),
+			faq: z.array(z.object({ question: z.string(), answer: z.string() })).optional(),
 		}),
 });
 

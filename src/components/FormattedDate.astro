@@ -5,8 +5,17 @@ interface Props {
 }
 
 const { date, format = 'long' } = Astro.props;
+
+/** Las fechas se muestran en la hora de Guatemala, donde se publica el blog. */
+const TIME_ZONE = 'America/Guatemala';
+
 const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-const shortLabel = `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+const parts = Object.fromEntries(
+	new Intl.DateTimeFormat('en-US', { timeZone: TIME_ZONE, year: 'numeric', month: 'numeric', day: 'numeric' })
+		.formatToParts(date)
+		.map((part) => [part.type, part.value]),
+);
+const shortLabel = `${Number(parts.day)} ${months[Number(parts.month) - 1]} ${parts.year}`;
 ---
 
 <time datetime={date.toISOString()}>
@@ -17,7 +26,7 @@ const shortLabel = `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.ge
 					year: 'numeric',
 					month: 'long',
 					day: 'numeric',
-					timeZone: 'UTC',
+					timeZone: TIME_ZONE,
 				})
 	}
 </time>
