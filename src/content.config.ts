@@ -17,6 +17,8 @@ const blog = defineCollection({
 			topic: z.enum(EDITORIAL_TOPICS).optional(),
 			heroImage: z.optional(image()),
 			heroAlt: z.string().optional(),
+			/** Respuesta breve (2 o 3 frases) que abre la nota en un bloque «En resumen». */
+			summary: z.string().optional(),
 			/** Imagen para redes (1200 × 630). Si falta, se recorta la portada. */
 			socialImage: z.optional(image()),
 			showCover: z.boolean().default(true),
