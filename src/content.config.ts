@@ -17,6 +17,8 @@ const blog = defineCollection({
 			topic: z.enum(EDITORIAL_TOPICS).optional(),
 			heroImage: z.optional(image()),
 			heroAlt: z.string().optional(),
+			/** Imagen para redes (1200 × 630). Si falta, se recorta la portada. */
+			socialImage: z.optional(image()),
 			showCover: z.boolean().default(true),
 			draft: z.boolean().default(false),
 			author: z.string().default('Eder Santisteban'),

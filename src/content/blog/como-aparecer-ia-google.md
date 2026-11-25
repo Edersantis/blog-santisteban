@@ -9,6 +9,7 @@ tags:
   - búsqueda con IA
   - marketing
 heroImage: '../../assets/blog/medir.jpg'
+heroAlt: 'Un portátil muestra un panel de analítica con gráficos e indicadores.'
 draft: false
 ---
 

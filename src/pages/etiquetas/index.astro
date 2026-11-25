@@ -17,7 +17,7 @@ for (const post of posts) {
 const tags = [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label, 'es'));
 ---
 
-<Base title="Etiquetas" description="Etiquetas de los artículos del blog." mainClass="page">
+<Base title="Temas y etiquetas" description="Todos los temas del blog de Eder Santisteban: IA aplicada, estrategia y operaciones, marketing y medición, agentes de IA, automatización y más." pageType="CollectionPage" breadcrumbs={[{ name: 'Inicio', url: '/' }, { name: 'Etiquetas', url: '/etiquetas/' }]} mainClass="page">
 	<p class="page-kicker">Índice</p>
 	<h1 class="page-title">Etiquetas</h1>
 	{

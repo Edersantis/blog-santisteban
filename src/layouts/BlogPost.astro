@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
-import { SOCIAL_LINKS, X_URL } from '../consts';
+import { AUTHOR_PROFILE, SOCIAL_LINKS, X_URL } from '../consts';
 import { slugifyTag } from '../lib/posts';
 import Base from './Base.astro';
 
@@ -17,7 +17,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 	older?: CollectionEntry<'blog'>;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, heroAlt, faq, showCover, topic, section, tags, draft, author, readingMinutes, headings = [], related, newer, older } =
+const { title, description, pubDate, updatedDate, heroImage, heroAlt, socialImage, faq, showCover, topic, section, tags, draft, author, readingMinutes, headings = [], related, newer, older } =
 	Astro.props;
 
 const readingLabel = readingMinutes === 1 ? '1 min de lectura' : `${readingMinutes} min de lectura`;
@@ -44,7 +44,12 @@ const faqJsonLd = faq?.length
 <Base
 	title={title}
 	description={description}
-	image={heroImage}
+	image={socialImage ?? heroImage}
+	imageAlt={heroAlt}
+	section={isRadar ? 'Radar IA' : topic}
+	breadcrumbs={isRadar
+		? [{ name: 'Inicio', url: '/' }, { name: 'Radar IA', url: '/radar-ia/' }, { name: displayTitle, url: Astro.url.pathname }]
+		: [{ name: 'Inicio', url: '/' }, { name: displayTitle, url: Astro.url.pathname }]}
 	ogType="article"
 	pubDate={pubDate}
 	updatedDate={updatedDate}
@@ -114,6 +119,10 @@ const faqJsonLd = faq?.length
 			)}
 		</div>
 		<div class="post-end">
+			<section class="author-note" aria-labelledby="author-note-title">
+				<h2 class="toc-label" id="author-note-title">Sobre el autor</h2>
+				<p><a href={AUTHOR_PROFILE.url} rel="author">{AUTHOR_PROFILE.name}</a>. {AUTHOR_PROFILE.shortBio}</p>
+			</section>
 			<nav class="author-links" aria-label="Redes de Eder Santisteban">
 				<span>Conversemos</span>
 				<a href={X_URL} target="_blank" rel="noopener noreferrer">X ↗</a>
@@ -450,6 +459,22 @@ const faqJsonLd = faq?.length
 
 	.related-note {
 		margin: 1.5rem 0 0.85rem;
+	}
+
+	.author-note {
+		margin: 0 0 1.5rem;
+		max-width: var(--measure);
+	}
+
+	.author-note p {
+		margin: 0.45rem 0 0;
+		color: var(--muted);
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+
+	.author-note a {
+		color: var(--text);
 	}
 
 	.related-note a {

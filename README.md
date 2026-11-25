@@ -67,6 +67,7 @@ Fechas en formato `AAAA-MM-DD`. Si omites `author`, queda `Eder Santisteban`. Si
 | `topic` | no | IA aplicada, Estrategia y operaciones, o Marketing y medición |
 | `showCover` | no | Con `false`, la nota abre con texto y conserva `heroImage` para compartir |
 | `heroImage` | no | Imagen de portada |
+| `socialImage` | no | Imagen para redes de 1200 × 630. Úsala cuando la portada es panorámica y el recorte cortaría texto |
 | `heroAlt` | no | Texto alternativo de la portada. Si falta, la imagen se trata como decorativa |
 | `faq` | no | Lista de `question` y `answer`. Genera el marcado FAQPage para buscadores; las preguntas también deben estar en el texto |
 | `draft` | no | `true` o `false`. Por defecto `false` |
@@ -142,3 +143,12 @@ Hasta que ese dominio esté conectado, el sitio se ve en el subdominio `.netlify
 ```
 
 Hay ocho artículos de muestra en `src/content/blog/`, con prefijo `ejemplo-` y etiqueta `ejemplo`, publicados (`draft: false`) para que el sitio no salga vacío. Se borran todos de una vez cuando haya textos reales. La plantilla de X y LinkedIn sigue en `social/_plantilla.md`.
+
+## Buscadores y asistentes de IA
+
+- `robots.txt` permite a buscadores y a los rastreadores de IA (OAI-SearchBot, GPTBot, PerplexityBot, Claude-SearchBot, ClaudeBot, Google-Extended y otros).
+- `sitemap-index.xml` incluye `lastmod` con la fecha de cada nota.
+- `/llms.txt` y `/llms-full.txt` se generan solos desde las notas publicadas (`src/pages/llms.txt.ts` y `src/pages/llms-full.txt.ts`).
+- Cada página lleva datos estructurados (schema.org): WebSite, Person, WebPage o CollectionPage, BreadcrumbList y, en las notas, BlogPosting. Si la nota tiene `faq`, se añade FAQPage. Los datos del autor están en `AUTHOR_PROFILE`, en `src/consts.ts`.
+- Imagen social de 1200 × 630 en cada nota, con `twitter:site` y `twitter:creator` @EderSantis.
+- IndexNow (Bing, Yandex y otros): después de un deploy, `npm run indexnow` avisa de todas las URLs del sitemap. La clave está en `public/<clave>.txt` y en `scripts/indexnow.mjs`.

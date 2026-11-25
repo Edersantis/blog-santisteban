@@ -8,6 +8,7 @@ tags:
   - inteligencia artificial
   - automatización
 heroImage: '../../assets/blog/decision.jpg'
+heroAlt: 'Público sentado en un auditorio oscuro escucha una presentación.'
 draft: false
 ---
 
