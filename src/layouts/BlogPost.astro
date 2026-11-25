@@ -1,0 +1,455 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import TagList from '../components/TagList.astro';
+import { SOCIAL_LINKS, X_URL } from '../consts';
+import { slugifyTag } from '../lib/posts';
+import Base from './Base.astro';
+
+type Heading = { depth: number; slug: string; text: string };
+
+type Props = CollectionEntry<'blog'>['data'] & {
+	readingMinutes: number;
+	headings?: Heading[];
+	related?: CollectionEntry<'blog'>;
+	newer?: CollectionEntry<'blog'>;
+	older?: CollectionEntry<'blog'>;
+};
+
+const { title, description, pubDate, updatedDate, heroImage, showCover, topic, section, tags, draft, author, readingMinutes, headings = [], related, newer, older } =
+	Astro.props;
+
+const readingLabel = readingMinutes === 1 ? '1 min de lectura' : `${readingMinutes} min de lectura`;
+const isSample = tags.includes('ejemplo');
+const visibleTags = [...new Set(topic ? [topic, ...tags] : tags)].filter((tag) => slugifyTag(tag) !== 'ejemplo');
+const sections = headings.filter((heading) => heading.depth === 2);
+const linkedIn = SOCIAL_LINKS.find((link) => link.label === 'LinkedIn')!;
+const displayTitle = section === 'radar-ia' ? title.replace(/^Radar IA · .*?: /, '') : title;
+const isRadar = section === 'radar-ia';
+const showIndex = !isRadar && readingMinutes >= 5 && sections.length >= 3;
+---
+
+<Base
+	title={title}
+	description={description}
+	image={heroImage}
+	ogType="article"
+	pubDate={pubDate}
+	updatedDate={updatedDate}
+	author={author}
+	tags={tags}
+	noindex={isSample}
+	mainClass="article-page"
+>
+	<article class:list={["post", { "radar-post": isRadar }]}>
+		<header class="post-header">
+			<div class="post-heading">
+			{section === 'radar-ia' ? <p class="kicker"><a href="/radar-ia/">Radar IA</a></p> : isSample && <p class="kicker">Muestra</p>}
+			<h1 class="article-title">{displayTitle}</h1>
+			<p class="article-dek">{description}</p>
+			<p class="meta">
+				<span class="meta-part"><a href="https://santisteban.co/sobre-mi/" rel="author">{author}</a></span>
+				<span class="meta-part"><FormattedDate date={pubDate} format="short" /></span>
+				<span class="meta-part">{readingLabel}</span>
+				{draft && <span class="badge-draft">Borrador</span>}
+			</p>
+			{updatedDate && <p class="updated">Actualizado el <FormattedDate date={updatedDate} /></p>}
+			</div>
+		</header>
+		{isRadar && (
+			<nav class="radar-contents" aria-labelledby="radar-contents-title">
+				<div class="radar-contents-heading">
+					<h2 id="radar-contents-title">En esta edición</h2>
+					<a href="/radar-ia/">Ver archivo →</a>
+				</div>
+				<ol>
+					{sections.filter((heading) => heading.text !== 'La decisión de esta edición' && !heading.text.startsWith('Qué vale') && !heading.text.startsWith('La decisión que')).map((heading) => (
+						<li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+					))}
+				</ol>
+			</nav>
+		)}
+		<div class:list={["post-layout" , { "has-index": showIndex }]}>
+			<div class="prose">
+		{
+			heroImage && showCover && (
+				<figure class="hero-figure">
+					<Image
+						src={heroImage}
+						alt=""
+						widths={[400, 640, 960, 1280]}
+						sizes="(min-width: 680px) 640px, calc(100vw - 2.5rem)"
+						loading="lazy"
+					/>
+				</figure>
+			)
+		}
+
+				<slot />
+			</div>
+			{showIndex && (
+				<aside class="post-aside">
+					<nav aria-label="En esta nota">
+						<p class="toc-label">En esta nota</p>
+						<ol class="toc">
+							{sections.map((heading) => (
+								<li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+							))}
+						</ol>
+					</nav>
+				</aside>
+			)}
+		</div>
+		<div class="post-end">
+			<nav class="author-links" aria-label="Redes de Eder Santisteban">
+				<span>Conversemos</span>
+				<a href={X_URL} target="_blank" rel="noopener noreferrer">X ↗</a>
+				<a href={linkedIn.href} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+			</nav>
+			{!isRadar && <TagList tags={visibleTags} />}
+			{isRadar && (
+				<nav class="edition-navigation" aria-label="Otras ediciones de Radar IA">
+					{older && <a href={`/blog/${older.id}/`}><span>← Edición anterior</span><FormattedDate date={older.data.pubDate} /></a>}
+					{newer && <a href={`/blog/${newer.id}/`}><span>Edición siguiente →</span><FormattedDate date={newer.data.pubDate} /></a>}
+				</nav>
+			)}
+			{related && !isRadar && (
+				<section class="related-note" aria-labelledby="related-note-title">
+					<h2 class="toc-label" id="related-note-title">Sigue leyendo</h2>
+					<a href={`/blog/${related.id}/`}>
+						{related.data.title} <span aria-hidden="true">→</span>
+					</a>
+					<p>{related.data.description}</p>
+				</section>
+			)}
+			<a class="back-link" href={isRadar ? "/radar-ia/" : "/#notas"}>{isRadar ? "← Todas las ediciones de Radar IA" : "← Volver a las notas"}</a>
+		</div>
+	</article>
+</Base>
+
+
+<style>
+	.radar-post .article-title {
+		font-size: clamp(2rem, 4.5vw, 3.65rem);
+		max-width: 28ch;
+		line-height: 1.04;
+	}
+
+	.radar-post .kicker a {
+		text-decoration: none;
+	}
+
+	.radar-post .meta a {
+		text-decoration: none;
+	}
+
+	.radar-contents {
+		width: var(--editorial-width);
+		max-width: 52rem;
+		margin: clamp(2rem, 5vw, 3rem) auto 0;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.radar-contents-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.radar-contents-heading h2 {
+		margin: 0;
+		font: 0.73rem/1.4 var(--font-mono);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.radar-contents-heading > a {
+		font-size: 0.85rem;
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.radar-contents ol {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.7rem 2.5rem;
+		list-style: none;
+		margin: 1.1rem 0 0;
+		padding: 0;
+	}
+
+	.radar-contents li {
+		position: relative;
+		padding-left: 1rem;
+	}
+
+	.radar-contents li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.52rem;
+		width: 4px;
+		height: 4px;
+		background: var(--accent);
+	}
+
+	.radar-contents li a {
+		font-size: 0.94rem;
+		line-height: 1.4;
+		text-decoration: none;
+		display: block;
+	}
+
+	.radar-post :global(.prose h2) {
+		padding-top: 1.75rem;
+		margin-top: 2.75rem;
+		border-top: 1px solid var(--line);
+		font-family: var(--font-sans);
+		font-variation-settings: normal;
+		font-size: clamp(1.4rem, 3vw, 1.85rem);
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.radar-post :global(.prose p:has(> strong:first-child)) {
+		border-left: 2px solid var(--accent);
+		padding: 0.1rem 0 0.1rem 1.1rem;
+		margin-block: 1.3rem 2rem;
+		color: var(--muted);
+	}
+
+	.radar-post :global(.prose p > strong:first-child) {
+		color: var(--text);
+	}
+
+	.radar-post :global(.prose p > a:last-child) {
+		font-size: 0.87em;
+	}
+
+	.edition-navigation {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		border-block: 1px solid var(--line);
+		margin: 1.5rem 0;
+		padding-block: 1.3rem;
+	}
+
+	.edition-navigation a {
+		display: grid;
+		gap: 0.35rem;
+		text-decoration: none;
+		font-size: 1rem;
+	}
+
+	.edition-navigation span {
+		font: 0.7rem/1.5 var(--font-mono);
+		color: var(--muted);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	@media (max-width: 620px) {
+		.radar-contents ol {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.author-links {
+		position: relative;
+		isolation: isolate;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem 1.2rem;
+		padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+		margin-bottom: 1.75rem;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.author-links::before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		inset: -1rem 0;
+		background: radial-gradient(ellipse 50% 50% at center, rgba(144, 94, 57, 0.17), transparent 100%);
+		pointer-events: none;
+	}
+
+	.author-links span {
+		margin-right: auto;
+		color: var(--text);
+		font: 520 clamp(1.7rem, 4vw, 2.6rem)/1.1 var(--font-display);
+		letter-spacing: -0.035em;
+	}
+
+	.author-links a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.65rem 1.05rem;
+		min-height: 44px;
+		border: 1px solid var(--line);
+		border-radius: 2px;
+		font-size: 0.92rem;
+		color: var(--text);
+		text-decoration: none;
+		transition: border-color 160ms ease, background-color 160ms ease;
+	}
+
+	.author-links a:hover,
+	.author-links a:focus-visible {
+		border-color: var(--accent);
+		background: var(--code-bg);
+		color: var(--accent);
+	}
+
+	@media (max-width: 480px) {
+		.author-links span {
+			flex-basis: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.author-links a {
+			transition: none;
+		}
+	}
+
+	:global(.article-page .prose img) {
+		aspect-ratio: 5 / 2;
+		object-fit: cover;
+	}
+
+	:global(main.wrap.article-page) {
+		width: 100%;
+	}
+
+	:global(.article-page) {
+		width: 100%;
+		padding-top: 0;
+	}
+
+	.post-header {
+		background: #eee9df;
+		color: #211d19;
+		border-bottom: 1px solid #d6cdc0;
+		padding-block: clamp(2.5rem, 6vw, 4.5rem);
+	}
+
+	.post-heading {
+		width: var(--editorial-width);
+		max-width: 52rem;
+		margin-inline: auto;
+	}
+
+	.article-title {
+		color: inherit;
+		max-width: 23ch;
+		font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+		line-height: 1.01;
+		letter-spacing: -0.035em;
+	}
+
+	.post-header .kicker,
+	.post-header .badge-draft {
+		color: #973e27;
+	}
+
+	.post-header .meta,
+	.post-header .updated {
+		color: #64584e;
+	}
+
+	.post-layout {
+		width: var(--editorial-width);
+		max-width: 52rem;
+		margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+	}
+
+	.post-layout .prose {
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	.hero-figure {
+		margin: 0 0 2rem;
+		max-width: 100%;
+	}
+
+	.hero-figure :global(img) {
+		margin: 0;
+		height: auto;
+		max-height: none;
+		aspect-ratio: 5 / 2;
+		object-fit: cover;
+	}
+
+	.post-end {
+		width: var(--editorial-width);
+		max-width: 52rem;
+		margin-inline: auto;
+		margin-top: 3rem;
+	}
+
+	:global(.article-page .prose h2),
+	:global(.article-page .prose h3) {
+		scroll-margin-top: 6rem;
+	}
+
+	@media (min-width: 1100px) {
+		.post-layout.has-index {
+			max-width: 52rem;
+			grid-template-columns: minmax(0, 1fr) 10rem;
+			gap: 2.5rem;
+		}
+	}
+
+	@media (max-width: 1099px) {
+		.post-layout.has-index {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.post-aside {
+			grid-row: 1;
+			position: static;
+		}
+	}
+
+	.article-dek {
+		max-width: var(--measure);
+		margin: 1rem 0 0;
+		color: #64584e;
+		font-size: clamp(1.06rem, 2vw, 1.25rem);
+		line-height: 1.5;
+	}
+
+	.related-note p {
+		margin: 0.45rem 0 0;
+		color: var(--muted);
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.related-note {
+		margin: 1.5rem 0 0.85rem;
+	}
+
+	.related-note a {
+		font-family: var(--font-display);
+		font-size: clamp(1.45rem, 3.2vw, 2.2rem);
+		line-height: 1.15;
+		text-decoration: none;
+	}
+
+	.related-note a span {
+		color: var(--accent);
+		font-family: var(--font-sans);
+		font-size: 0.65em;
+	}
+</style>

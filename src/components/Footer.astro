@@ -1,0 +1,59 @@
+---
+import { AUTHOR, SOCIAL_LINKS, X_URL } from '../consts';
+
+const year = new Date().getFullYear();
+const links: { label: string; href: string }[] = SOCIAL_LINKS.filter(
+	({ label }) => label === 'Sitio' || label === 'LinkedIn',
+);
+if (X_URL) links.push({ label: 'X', href: X_URL });
+---
+
+<footer class="site-footer">
+	<div class="wrap footer-bar">
+		<p>© {year} {AUTHOR}</p>
+		<nav aria-label="Enlaces">
+			{
+				links.map((link) => (
+					<a href={link.href} target="_blank" rel="noopener noreferrer">
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		border-top: 1px solid var(--line);
+		padding: 1.5rem 0;
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.footer-bar {
+		width: var(--editorial-width);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		align-items: baseline;
+	}
+	p {
+		margin: 0;
+	}
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 1rem;
+	}
+	.footer-bar a {
+		color: var(--muted);
+		text-decoration: none;
+	}
+	.footer-bar a:hover {
+		color: var(--accent);
+	}
+</style>

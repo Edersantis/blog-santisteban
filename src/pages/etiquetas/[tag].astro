@@ -1,0 +1,39 @@
+---
+import PostList from '../../components/PostList.astro';
+import Base from '../../layouts/Base.astro';
+import { discoveryTags, getPublishedPosts, slugifyTag } from '../../lib/posts';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const labels = new Map<string, string>();
+
+	for (const post of posts) {
+		for (const tag of discoveryTags(post)) {
+			const slug = slugifyTag(tag);
+			if (slug && !labels.has(slug)) labels.set(slug, tag);
+		}
+	}
+
+	return [...labels.entries()].map(([tag, label]) => ({
+		params: { tag },
+		props: { label },
+	}));
+}
+
+interface Props {
+	label: string;
+}
+
+const { tag } = Astro.params;
+const { label } = Astro.props;
+const posts = (await getPublishedPosts()).filter((post) =>
+	discoveryTags(post).some((item) => slugifyTag(item) === tag),
+);
+---
+
+<Base title={`Etiqueta: ${label}`} description={`Artículos etiquetados con «${label}».`} mainClass="page">
+	<p><a class="back-link" href="/etiquetas/">Todas las etiquetas</a></p>
+	<p class="page-kicker">Etiqueta</p>
+	<h1 class="page-title">{label}</h1>
+	<PostList posts={posts} />
+</Base>

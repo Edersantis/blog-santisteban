@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const editions = (await getPublishedPosts()).filter((post) => post.data.section === 'radar-ia');
+---
+<Base title="Radar IA · Archivo de noticias y análisis" description="Las noticias de inteligencia artificial y su impacto en los negocios. Todas las ediciones de Radar IA, por Eder Santisteban." mainClass="page">
+	<p class="page-kicker">Actualidad · Dos veces por semana</p>
+	<h1 class="page-title">Radar IA</h1>
+	<p class="lede">Lo que cambió y por qué importa. Noticias, contexto y decisiones para tu negocio.</p>
+	<ul class="editions">
+		{editions.map((edition) => (
+			<li>
+				<FormattedDate date={edition.data.pubDate} />
+				<a href={`/blog/${edition.id}/`}>
+					<h2>{edition.data.title.replace(/^Radar IA · \d+ de noviembre: /, '')}</h2>
+					<p>{edition.data.description}</p>
+					<span>Leer edición →</span>
+				</a>
+			</li>
+		))}
+	</ul>
+	<a class="back-link" href="/">← Volver al blog</a>
+</Base>
+
+<style>
+	.page-title { max-width: none; margin-bottom: 1rem; }
+	.editions { list-style: none; padding: 0; margin: 2.75rem 0; }
+	.editions li { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 1.5rem; padding: 1.75rem 0; border-top: 1px solid var(--line); }
+	.editions :global(time) { color: var(--muted); font: 0.75rem/1.6 var(--font-mono); }
+	.editions a { text-decoration: none; }
+	.editions h2 { font: 560 clamp(1.4rem, 3vw, 2rem)/1.2 var(--font-sans); letter-spacing: -0.025em; margin: 0; }
+	.editions p { color: var(--muted); font-size: 0.95rem; line-height: 1.55; margin: 0.65rem 0; max-width: 60ch; }
+	.editions span { color: var(--accent); font-size: 0.85rem; }
+	.editions a:hover h2 { color: var(--accent); }
+	@media(max-width: 640px) { .editions li { grid-template-columns: minmax(0, 1fr); gap: 0.6rem; } }
+</style>

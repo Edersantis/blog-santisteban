@@ -1,0 +1,527 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from '../components/FormattedDate.astro';
+import portrait from '../assets/eder-byline.png';
+import { AUTHOR, EDITORIAL_TOPICS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { getPublishedPosts, tagHref } from '../lib/posts';
+
+const published = await getPublishedPosts();
+const articles = published.filter((post) => post.data.section === 'articulos');
+const radar = published.filter((post) => post.data.section === 'radar-ia');
+const [latest] = articles;
+const [latestRadar] = radar;
+const highlighted = new Set([latest?.id, latestRadar?.id].filter(Boolean));
+const archive = published.filter((post) => !highlighted.has(post.id)).slice(0, 10);
+const featuredTopics = EDITORIAL_TOPICS.filter((topic) =>
+	published.some((post) => !post.data.draft && post.data.topic === topic),
+);
+---
+
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
+	<section class="hero">
+		<div class="hero-inner">
+			<p class="hero-kicker">IA, estrategia y negocio</p>
+			<h1 class="statement">
+				<span>La IA no te deja atrás.</span>
+				<em>Ignorarla sí.</em>
+			</h1>
+			<div class="hero-sign">
+				<Image src={portrait} alt="" width={192} class="hero-mark" />
+				<p>Por <strong>{AUTHOR}</strong></p>
+			</div>
+		</div>
+	</section>
+
+	<section class="highlights" aria-label="Últimas publicaciones">
+		<div class="highlight" id="radar-ia">
+			<div class="highlight-meta">
+				<h2 class="radar-label"><a href="/radar-ia/">Radar IA</a></h2>
+				{latestRadar && <FormattedDate date={latestRadar.data.pubDate} format="short" />}
+			</div>
+			{latestRadar ? (
+				<a class="highlight-link" href={`/blog/${latestRadar.id}/`}>
+					<h3>{latestRadar.data.title}</h3>
+					<p>{latestRadar.data.description}</p>
+					<span class="read-note">Leer edición →</span>
+				</a>
+			) : (
+				<div class="highlight-pending">
+					<h3>Lo que cambió<br />y por qué importa.</h3>
+					<p>Noticias de IA con contexto para tu negocio. Dos veces por semana.</p>
+					<span class="pending-label">Primera edición · Próximamente</span>
+				</div>
+			)}
+		</div>
+
+		{latest && (
+			<div class="highlight" id="articulos">
+				<div class="highlight-meta">
+					<h2 class="article-label">Artículo</h2>
+					<FormattedDate date={latest.data.pubDate} format="short" />
+				</div>
+				<a class="highlight-link" href={`/blog/${latest.id}/`}>
+					<h3>{latest.data.title}</h3>
+					<p>{latest.data.description}</p>
+					<span class="read-note">Leer artículo →</span>
+				</a>
+			</div>
+		)}
+	</section>
+
+	<section class="publication-archive" id="notas" aria-labelledby="archive-title">
+		<div class="archive-heading">
+			<h2 id="archive-title">Todas las publicaciones</h2>
+			<div class="archive-filters" role="group" aria-label="Filtrar publicaciones">
+				<button type="button" data-filter="todo" aria-pressed="true">Todo</button>
+				<button type="button" data-filter="articulos" aria-pressed="false">Artículos</button>
+				<button type="button" data-filter="radar-ia" aria-pressed="false">Radar IA</button>
+			</div>
+		</div>
+		<ul class="mixed-list">
+			{archive.map((post) => (
+				<li data-section={post.data.section}>
+					<a href={`/blog/${post.id}/`}>
+						<span class="archive-meta">
+							<span class:list={["publication-kind", { "is-radar": post.data.section === 'radar-ia' }]}>
+								{post.data.section === 'radar-ia' ? 'Radar IA' : 'Artículo'}
+							</span>
+							<FormattedDate date={post.data.pubDate} format="short" />
+						</span>
+						<span class="archive-title">{post.data.title}</span>
+					</a>
+				</li>
+			))}
+		</ul>
+		<p class="archive-empty" role="status" hidden={archive.length > 0}>Todavía no hay más publicaciones.</p>
+	</section>
+
+	{featuredTopics.length > 0 && (
+		<nav class="topic-directory" aria-labelledby="temas">
+			<div class="section-label"><h2 id="temas">Explorar por tema</h2></div>
+			<ul>
+				<li><a href="/radar-ia/">Radar IA</a></li>
+				{featuredTopics.map((name) => <li><a href={tagHref(name)}>{name}</a></li>)}
+				<li><a class="all-topics" href="/etiquetas/">Todos los temas <span aria-hidden="true">→</span></a></li>
+			</ul>
+		</nav>
+	)}
+</Base>
+
+<script>
+	const archive = document.querySelector('.publication-archive');
+	if (archive) {
+		const buttons = archive.querySelectorAll<HTMLButtonElement>('[data-filter]');
+		const rows = archive.querySelectorAll<HTMLLIElement>('[data-section]');
+		const empty = archive.querySelector<HTMLElement>('.archive-empty');
+
+		buttons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const selected = button.dataset.filter;
+				buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+				let visible = 0;
+				rows.forEach((row) => {
+					row.hidden = selected !== 'todo' && row.dataset.section !== selected;
+					if (!row.hidden) visible++;
+				});
+				if (empty) {
+					empty.hidden = visible > 0;
+					empty.textContent = selected === 'radar-ia'
+						? 'Las ediciones de Radar IA aparecerán aquí después de su publicación.'
+						: 'Todavía no hay más publicaciones.';
+				}
+			});
+		});
+	}
+</script>
+
+<style>
+	.radar-label a { text-decoration: none; }
+
+	.hero {
+		background: #eee9df;
+		color: #211d19;
+		border-bottom: 1px solid #d6cdc0;
+	}
+
+	.hero-inner {
+		width: var(--editorial-width);
+		margin-inline: auto;
+	}
+
+	.topic-directory {
+		width: var(--editorial-width);
+		margin-inline: auto;
+	}
+
+	.hero-inner {
+		padding-block: clamp(2.7rem, 6.6vw, 5.25rem);
+	}
+
+	.hero-kicker {
+		margin: 0 0 1.15rem;
+		color: #64584e;
+		font: 400 0.72rem/1.3 var(--font-mono);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.statement {
+		margin: 0;
+		color: inherit;
+		font-size: clamp(2rem, 6.3vw, 5.4rem);
+		font-weight: 540;
+		font-variation-settings: 'opsz' 96, 'wght' 540;
+		line-height: 0.99;
+		text-wrap: balance;
+	}
+
+	.statement span,
+	.statement em {
+		display: block;
+	}
+
+	.statement em {
+		color: #973e27;
+		font-family: var(--font-display-italic);
+		font-style: italic;
+	}
+
+	.hero-sign {
+		display: flex;
+		gap: 0.9rem;
+		align-items: center;
+		margin-top: clamp(1.35rem, 3vw, 2rem);
+	}
+
+	.hero-sign p {
+		margin: 0;
+		color: #554b41;
+		font-size: 0.91rem;
+	}
+
+	.hero-sign strong {
+		color: #211d19;
+		font-weight: 600;
+	}
+
+	.hero-mark {
+		display: block;
+		width: clamp(3.5rem, 6.7vw, 4.75rem);
+		height: auto;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: radial-gradient(circle at 50% 40%, #ded3c3, #cbbba7);
+		object-fit: cover;
+		object-position: center top;
+	}
+
+	.notes {
+		scroll-margin-top: 6rem;
+	}
+
+	.section-label {
+		flex-wrap: wrap;
+		gap: 0.55rem 1rem;
+	}
+
+	#ultima-nota {
+		color: var(--accent);
+	}
+
+	.featured {
+		display: grid;
+		grid-template-columns: minmax(8rem, 17%) minmax(0, 1fr);
+		gap: 0.9rem 1.65rem;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: clamp(1.65rem, 3.6vw, 2.65rem);
+	}
+
+	.feature-meta {
+		flex-direction: column;
+		justify-content: flex-start;
+		gap: 0.65rem;
+		margin: 0.38rem 0 0;
+	}
+
+	.latest-note {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.latest-note h3 {
+		max-width: 36ch;
+		margin: 0;
+		font: 560 clamp(1.35rem, 3.1vw, 2.4rem)/1.14 var(--font-sans);
+		font-variation-settings: normal;
+		letter-spacing: -0.04em;
+		text-wrap: pretty;
+	}
+
+	.latest-note:hover h3,
+	.latest-note:focus-visible h3 {
+		color: var(--accent);
+	}
+
+	.read-note {
+		display: inline-block;
+		margin-top: 0.9rem;
+		color: var(--accent);
+		font-size: 0.88rem;
+	}
+
+	.latest-note p {
+		max-width: 58ch;
+		margin: 0.75rem 0 0;
+		color: var(--muted);
+		font-size: 1rem;
+		line-height: 1.55;
+	}
+
+	.notes-archive {
+		margin-top: clamp(2.25rem, 5vw, 3.75rem);
+	}
+
+	.topic-directory {
+		scroll-margin-top: 6rem;
+		margin-top: clamp(3.5rem, 8.5vh, 5.5rem);
+		position: relative;
+		isolation: isolate;
+	}
+
+	.topic-directory::before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		inset: -3rem 0 -2.5rem;
+		background: radial-gradient(
+			ellipse 50% 50% at center,
+			rgba(144, 94, 57, 0.14) 0%,
+			rgba(144, 94, 57, 0.06) 48%,
+			transparent 100%
+		);
+		pointer-events: none;
+	}
+
+	:global(:root[data-theme='light']) .topic-directory::before {
+		content: none;
+	}
+
+	.topic-directory ul {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.55rem 1.35rem;
+		list-style: none;
+		margin: 0.8rem 0 0;
+		padding: 0.95rem 0 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.topic-directory a {
+		font-size: 0.95rem;
+		text-decoration: none;
+	}
+
+	.topic-directory a:hover,
+	.topic-directory a:focus-visible {
+		text-decoration: underline;
+	}
+
+	.all-topics {
+		color: var(--muted);
+	}
+
+	.highlights,
+	.publication-archive {
+		width: var(--editorial-width);
+		margin-inline: auto;
+		scroll-margin-top: 6rem;
+	}
+
+	.highlights {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		margin-top: clamp(2.5rem, 6vw, 4rem);
+	}
+
+	.highlight {
+		min-width: 0;
+		padding-right: clamp(1.5rem, 4vw, 3rem);
+		scroll-margin-top: 6rem;
+	}
+
+	.highlight + .highlight {
+		padding-left: clamp(1.5rem, 4vw, 3rem);
+		padding-right: 0;
+		border-left: 1px solid var(--line);
+	}
+
+	.highlight-meta,
+	.archive-meta {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		font: 0.69rem/1.5 var(--font-mono);
+		color: var(--muted);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.highlight-meta h2 {
+		margin: 0;
+		font: inherit;
+		color: inherit;
+		letter-spacing: inherit;
+	}
+
+	.highlight-meta .radar-label,
+	.is-radar {
+		color: var(--accent);
+	}
+
+	.highlight-meta .article-label,
+	.publication-kind:not(.is-radar) {
+		color: #a7b8c8;
+	}
+
+	:global(:root[data-theme='light']) .article-label,
+	:global(:root[data-theme='light']) .publication-kind:not(.is-radar) {
+		color: #465d73;
+	}
+
+	.highlight-link {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.highlight h3 {
+		font: 560 clamp(1.35rem, 2.65vw, 2rem)/1.16 var(--font-sans);
+		letter-spacing: -0.035em;
+		margin: 1rem 0 0;
+		text-wrap: pretty;
+	}
+
+	.highlight p {
+		color: var(--muted);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		margin: 0.85rem 0 0;
+	}
+
+	.read-note,
+	.pending-label {
+		display: inline-block;
+		margin-top: 1.25rem;
+		font-size: 0.85rem;
+		color: var(--accent);
+	}
+
+	.pending-label {
+		color: var(--muted);
+	}
+
+	.highlight-link:hover h3,
+	.highlight-link:focus-visible h3 {
+		color: var(--accent);
+	}
+
+	.publication-archive {
+		margin-top: clamp(3.5rem, 8vw, 6rem);
+	}
+
+	.archive-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.archive-heading h2 {
+		margin: 0;
+		font: 0.73rem/1.5 var(--font-mono);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--muted);
+	}
+
+	.archive-filters {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.archive-filters button {
+		background: none;
+		border: 0;
+		border-bottom: 1px solid transparent;
+		padding: 0.35rem 0;
+		color: var(--muted);
+		font: inherit;
+		font-size: 0.85rem;
+		cursor: pointer;
+	}
+
+	.archive-filters button[aria-pressed="true"] {
+		color: var(--text);
+		border-bottom-color: var(--accent);
+	}
+
+	.mixed-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.mixed-list li {
+		border-top: 1px solid var(--line);
+	}
+
+	.mixed-list li:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.mixed-list a {
+		display: block;
+		padding: 1rem 0 1.3rem;
+		text-decoration: none;
+	}
+
+	.archive-title {
+		display: block;
+		margin-top: 0.4rem;
+		font: 520 clamp(1.4rem, 2.35vw, 2.1rem)/1.15 var(--font-display);
+		letter-spacing: -0.025em;
+	}
+
+	.mixed-list a:hover .archive-title {
+		color: var(--accent);
+	}
+
+	.archive-empty {
+		color: var(--muted);
+		font-size: 0.95rem;
+		padding-block: 1.5rem;
+		border-top: 1px solid var(--line);
+	}
+
+	@media (max-width: 640px) {
+		.highlights {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.highlight {
+			padding: 0 0 2rem;
+		}
+
+		.highlight + .highlight {
+			padding: 2rem 0 0;
+			border-left: 0;
+			border-top: 1px solid var(--line);
+		}
+	}
+</style>

@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { discoveryTags, getPublishedPosts, tagHref } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+const counts = new Map<string, { label: string; count: number }>();
+
+for (const post of posts) {
+	for (const tag of discoveryTags(post)) {
+		const href = tagHref(tag);
+		const current = counts.get(href);
+		if (current) current.count += 1;
+		else counts.set(href, { label: tag, count: 1 });
+	}
+}
+
+const tags = [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label, 'es'));
+---
+
+<Base title="Etiquetas" description="Etiquetas de los artículos del blog." mainClass="page">
+	<p class="page-kicker">Índice</p>
+	<h1 class="page-title">Etiquetas</h1>
+	{
+		tags.length === 0 ? (
+			<p>Todavía no hay etiquetas.</p>
+		) : (
+			<ul class="tag-index">
+				{tags.map(([href, info]) => (
+					<li>
+						<a href={href}>{info.label}</a>
+						<span>
+							{info.count} {info.count === 1 ? 'artículo' : 'artículos'}
+						</span>
+					</li>
+				))}
+			</ul>
+		)
+	}
+</Base>

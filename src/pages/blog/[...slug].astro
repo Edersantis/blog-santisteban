@@ -1,0 +1,28 @@
+---
+import { render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+import { findRelatedPost, getPublishedPosts, readingMinutes, type BlogPost as Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const editions = posts.filter((post) => post.data.section === 'radar-ia');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: {
+			post,
+			related: findRelatedPost(post, posts),
+			newer: post.data.section === 'radar-ia' ? editions[editions.indexOf(post) - 1] : undefined,
+			older: post.data.section === 'radar-ia' ? editions[editions.indexOf(post) + 1] : undefined,
+		},
+	}));
+}
+
+type Props = { post: Post; related?: Post; newer?: Post; older?: Post };
+
+const { post, related, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<BlogPost {...post.data} readingMinutes={readingMinutes(post.body)} headings={headings} related={related} newer={newer} older={older}>
+	<Content />
+</BlogPost>

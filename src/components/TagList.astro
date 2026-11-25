@@ -1,0 +1,43 @@
+---
+import { tagHref } from '../lib/posts';
+
+interface Props {
+	tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+{
+	tags.length > 0 && (
+		<ul class="tag-list">
+			{tags.map((tag) => (
+				<li>
+					<a href={tagHref(tag)}>{tag}</a>
+				</li>
+			))}
+		</ul>
+	)
+}
+
+<style>
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0.9rem;
+		list-style: none;
+		margin: 0.85rem 0 0;
+		padding: 0;
+	}
+	a {
+		color: var(--muted);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	a:hover {
+		color: var(--accent);
+	}
+</style>
