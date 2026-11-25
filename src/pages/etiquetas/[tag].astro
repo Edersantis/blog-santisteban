@@ -31,7 +31,13 @@ const posts = (await getPublishedPosts()).filter((post) =>
 );
 ---
 
-<Base title={`Etiqueta: ${label}`} description={`Artículos etiquetados con «${label}».`} mainClass="page">
+<Base
+	title={`${label}: notas sobre IA y negocio`}
+	description={`${posts.length === 1 ? 'Una nota' : `${posts.length} notas`} de Eder Santisteban sobre ${label.toLowerCase()}: inteligencia artificial aplicada a los negocios, estrategia y resultados.`}
+	pageType="CollectionPage"
+	breadcrumbs={[{ name: 'Inicio', url: '/' }, { name: 'Etiquetas', url: '/etiquetas/' }, { name: label, url: `/etiquetas/${tag}/` }]}
+	mainClass="page"
+>
 	<p><a class="back-link" href="/etiquetas/">Todas las etiquetas</a></p>
 	<p class="page-kicker">Etiqueta</p>
 	<h1 class="page-title">{label}</h1>

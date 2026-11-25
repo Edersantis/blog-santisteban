@@ -5,7 +5,7 @@ import { getPublishedPosts } from '../../lib/posts';
 
 const editions = (await getPublishedPosts()).filter((post) => post.data.section === 'radar-ia');
 ---
-<Base title="Radar IA · Archivo de noticias y análisis" description="Las noticias de inteligencia artificial y su impacto en los negocios. Todas las ediciones de Radar IA, por Eder Santisteban." mainClass="page">
+<Base title="Radar IA · Archivo de noticias y análisis" description="Las noticias de inteligencia artificial y su impacto en los negocios. Todas las ediciones de Radar IA, por Eder Santisteban." pageType="CollectionPage" breadcrumbs={[{ name: 'Inicio', url: '/' }, { name: 'Radar IA', url: '/radar-ia/' }]} mainClass="page">
 	<p class="page-kicker">Actualidad · Dos veces por semana</p>
 	<h1 class="page-title">Radar IA</h1>
 	<p class="lede">Lo que cambió y por qué importa. Noticias, contexto y decisiones para tu negocio.</p>

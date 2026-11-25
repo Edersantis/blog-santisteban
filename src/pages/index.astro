@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import FormattedDate from '../components/FormattedDate.astro';
 import portrait from '../assets/eder-byline.png';
-import { AUTHOR, EDITORIAL_TOPICS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { AUTHOR, EDITORIAL_TOPICS, HOME_TITLE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPublishedPosts, tagHref } from '../lib/posts';
 
@@ -18,7 +18,7 @@ const featuredTopics = EDITORIAL_TOPICS.filter((topic) =>
 );
 ---
 
-<Base title={SITE_TITLE} description={SITE_DESCRIPTION} mainClass="home">
+<Base title={SITE_TITLE} fullTitle={HOME_TITLE} description={SITE_DESCRIPTION} pageType="CollectionPage" mainClass="home">
 	<section class="hero">
 		<div class="hero-inner">
 			<p class="hero-kicker">IA, estrategia y negocio</p>
@@ -27,7 +27,7 @@ const featuredTopics = EDITORIAL_TOPICS.filter((topic) =>
 				<em>Ignorarla sí.</em>
 			</h1>
 			<div class="hero-sign">
-				<Image src={portrait} alt="" width={192} class="hero-mark" />
+				<Image src={portrait} alt="" width={192} class="hero-mark" loading="eager" />
 				<p>Por <strong>{AUTHOR}</strong></p>
 			</div>
 		</div>
